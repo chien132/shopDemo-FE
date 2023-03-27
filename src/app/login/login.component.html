@@ -1,0 +1,51 @@
+<div class="row justify-content-md-center my-5 pt-5">
+  <div class="col col-3">
+    <form>
+      <!-- Username input -->
+      <div class="form-outline mb-4">
+        <label class="form-label" for="usernameInput">Username</label>
+        <input
+          value="admin"
+          type="text"
+          id="usernameInput"
+          #usernameInput
+          class="form-control"
+        />
+      </div>
+
+      <!-- Password input -->
+      <div class="form-outline mb-4">
+        <label class="form-label" for="passwordInput">Password</label>
+        <input
+          value="123567"
+          type="password"
+          id="passwordInput"
+          #passwordInput
+          class="form-control"
+        />
+      </div>
+
+      <!-- 2 column grid layout for inline styling -->
+      <div class="row mb-4 justify-content-center">
+        <div class="col">
+          <!-- Simple link -->
+          <a href="#!">Forgot password?</a>
+        </div>
+      </div>
+
+      <!-- Submit button -->
+      <button
+        type="button"
+        class="btn btn-primary btn-block mb-4"
+        (click)="onLogin()"
+      >
+        Sign in
+      </button>
+
+      <!-- Register buttons -->
+      <div class="text-center">
+        <p>Not a member? <a href="#!">Register</a></p>
+      </div>
+    </form>
+  </div>
+</div>
