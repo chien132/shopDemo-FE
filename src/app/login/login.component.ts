@@ -1,7 +1,14 @@
-import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
-import { HttpService } from "../services/http.service";
-import { Customer } from "../models/customer.model";
-
+import { HttpErrorResponse } from "@angular/common/http";
+import {
+  Component,
+  ElementRef,
+  OnInit,
+  Renderer2,
+  ViewChild,
+} from "@angular/core";
+import { Router } from "@angular/router";
+import { AuthModel, LoginService } from "../services/auth/login.service";
+declare var jQuery: any;
 @Component({
   selector: "app-login",
   templateUrl: "./login.component.html",
@@ -10,9 +17,17 @@ import { Customer } from "../models/customer.model";
 export class LoginComponent implements OnInit {
   @ViewChild("usernameInput", { static: true }) usernameRef: ElementRef;
   @ViewChild("passwordInput", { static: true }) passwordRef: ElementRef;
+  @ViewChild("successModal", { static: true }) successModal: ElementRef;
+  @ViewChild("invalidFeedback", { static: true }) invalidFeedback: ElementRef;
+
+  authAccount: AuthModel;
+
   customer: { username: string; password: string };
-  constructor(private httpService: HttpService) {}
-  submitted = false;
+  constructor(
+    private loginService: LoginService,
+    private renderer: Renderer2,
+    private router: Router
+  ) {}
 
   ngOnInit() {}
 
@@ -21,6 +36,35 @@ export class LoginComponent implements OnInit {
       username: this.usernameRef.nativeElement.value,
       password: this.passwordRef.nativeElement.value,
     };
-    this.httpService.logIn(this.customer);
+    this.loginService.logIn(this.customer).subscribe(
+      (response) => {
+        this.loginService.setToken(
+          response.accessToken,
+          response.username,
+          response.roles[0] === "ROLE_OWNER" ? "OWNER" : "CUSTOMER"
+        );
+
+        console.log(response);
+
+        jQuery(this.successModal.nativeElement).modal("show");
+        setTimeout(() => {
+          jQuery(this.successModal.nativeElement).modal("hide");
+          this.router.navigate(["/items"]);
+        }, 1000);
+      },
+      (error: HttpErrorResponse) => {
+        switch (error.status) {
+          case 400:
+          case 401:
+            this.renderer.setProperty(
+              this.invalidFeedback.nativeElement,
+              "innerHTML",
+              "Username or password is incorrect!"
+            );
+          default:
+            console.log(error);
+        }
+      }
+    );
   }
 }

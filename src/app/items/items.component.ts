@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
-import { HttpService } from "../services/http.service";
 import { Item } from "../models/item.model";
+import { ItemService } from "../services/item.service";
 
 @Component({
   selector: "app-items",
@@ -9,16 +9,16 @@ import { Item } from "../models/item.model";
 })
 export class ItemsComponent implements OnInit {
   items: Item[];
-  constructor(private httpService: HttpService) {}
+  constructor(private itemService: ItemService) {}
 
   ngOnInit() {
-    this.httpService.getCustomerContent().subscribe(
+    this.itemService.getListItems().subscribe(
       (response) => {
-        // this.items = response;
-        console.log(response);
+        this.items = response;
+        // console.log(response);
       },
       (error) => {
-        console.log(error.error.message);
+        console.log(error);
       }
     );
   }

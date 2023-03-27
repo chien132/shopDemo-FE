@@ -1,28 +1,30 @@
 <div class="row justify-content-md-center my-5 pt-5">
-  <div class="col col-3">
+  <div class="col col-5">
     <form>
       <!-- Username input -->
-      <div class="form-outline mb-4">
-        <label class="form-label" for="usernameInput">Username</label>
-        <input
-          value="admin"
-          type="text"
-          id="usernameInput"
-          #usernameInput
-          class="form-control"
-        />
+      <div class="form-outline form-row mb-4">
+        <div class="col-12 mb-4">
+          <label class="form-label" for="usernameInput">Username</label>
+          <input
+            type="text"
+            id="usernameInput"
+            #usernameInput
+            class="form-control"
+          />
+        </div>
       </div>
 
       <!-- Password input -->
-      <div class="form-outline mb-4">
-        <label class="form-label" for="passwordInput">Password</label>
-        <input
-          value="123567"
-          type="password"
-          id="passwordInput"
-          #passwordInput
-          class="form-control"
-        />
+      <div class="form-outline form-row">
+        <div class="col-12 mb-4">
+          <label class="form-label" for="passwordInput">Password</label>
+          <input
+            type="password"
+            id="passwordInput"
+            #passwordInput
+            class="form-control"
+          />
+        </div>
       </div>
 
       <!-- 2 column grid layout for inline styling -->
@@ -41,11 +43,50 @@
       >
         Sign in
       </button>
-
+      <p class="text-danger d-flex justify-content-center" #invalidFeedback></p>
       <!-- Register buttons -->
       <div class="text-center">
         <p>Not a member? <a href="#!">Register</a></p>
       </div>
     </form>
+
+    <!-- Modal -->
+    <div
+      #successModal
+      class="modal fade"
+      id="exampleModal"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title text-success" id="exampleModalLabel">
+              Success
+            </h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">You are now logged in</div>
+          <!-- <div class="modal-footer"> -->
+          <!-- <button
+              type="button"
+              class="btn btn-secondary"
+              data-dismiss="modal"
+            >
+              Close
+            </button>
+            <button type="button" class="btn btn-primary">Save changes</button> -->
+          <!-- </div> -->
+        </div>
+      </div>
+    </div>
   </div>
 </div>
