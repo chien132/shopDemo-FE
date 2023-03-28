@@ -14,29 +14,18 @@ export class LoginService {
     private storageService: StorageService
   ) {}
 
-  logIn(customer): Observable<AuthModel> {
-    return this.httpClient.post<AuthModel>(`${this.baseUrl}login`, customer);
+  logIn(customer): Observable<{ token: string }> {
+    return this.httpClient.post<{ token: string }>(
+      `${this.baseUrl}login`,
+      customer
+    );
   }
 
-  setToken(id: number, token: string, username: string, type: string) {
-    this.storageService.setItem("customerId", String(id));
-    this.storageService.setItem("username", username);
-    this.storageService.setItem("type", type);
+  setToken(token: string) {
     this.storageService.setItem("jwtToken", token);
   }
 
   logOut() {
-    this.storageService.removeItem("customerId");
-    this.storageService.removeItem("username");
-    this.storageService.removeItem("type");
     this.storageService.removeItem("jwtToken");
   }
-}
-
-export interface AuthModel {
-  id: number;
-  username: string;
-  roles: string[];
-  tokenType: string;
-  accessToken: string;
 }

@@ -5,7 +5,6 @@ import { ErrorPageComponent } from "./error-page/error-page.component";
 import { ItemsComponent } from "./items/items.component";
 import { LoginComponent } from "./login/login.component";
 import { OrderListComponent } from "./order-list/order-list.component";
-import { OrderComponent } from "./order-list/order/order.component";
 import { CartResolver } from "./services/cart.resolver";
 
 const routes: Routes = [
@@ -25,12 +24,6 @@ const routes: Routes = [
   {
     path: "orders",
     component: OrderListComponent,
-    children: [
-      {
-        path: ":id",
-        component: OrderComponent,
-      },
-    ],
   },
   {
     path: "not-found",

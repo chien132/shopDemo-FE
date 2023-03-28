@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { Order } from "src/app/models/order.model";
+import { OrderService } from "src/app/services/order.service";
 
 @Component({
   selector: "app-order",
@@ -7,9 +8,34 @@ import { Order } from "src/app/models/order.model";
   styleUrls: ["./order.component.css"],
 })
 export class OrderComponent implements OnInit {
-  @Input("index") index: number;
   @Input("order") order: Order;
-  constructor() {}
+  total: number;
+  totalItem: number;
 
-  ngOnInit() {}
+  constructor(private orderService: OrderService) {}
+
+  calculateTotal() {
+    if (this.order != null && this.order.orderDetails.length > 0) {
+      this.total = this.order.orderDetails
+        .map((a) => a.quantity * a.item.price)
+        .reduce(function (a, b) {
+          return a + b;
+        });
+      this.totalItem = this.order.orderDetails
+        .map((a) => a.quantity)
+        .reduce(function (a, b) {
+          return a + b;
+        });
+    } else {
+      this.total = 0;
+      this.totalItem = 0;
+    }
+  }
+
+  ngOnInit() {
+    this.orderService.selectOrder.subscribe((o) => {
+      this.order = o;
+      this.calculateTotal();
+    });
+  }
 }

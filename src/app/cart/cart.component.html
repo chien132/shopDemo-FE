@@ -16,23 +16,23 @@
         *ngFor="let item of cart.cartDetails"
       >
         <div class="row main align-items-center">
-          <div class="col-2">
+          <div class="col-md-2">
             <img
               class="img-fluid"
               src="https://images.stockx.com/images/NVIDIA-Founders-GeForce-RTX-4090-24G-Graphics-CardB-Graphics-Card-900-1G136-2530-000.jpg"
               src="https://bizweb.dktcdn.net/100/310/135/files/iphone-13-pink-select-2021.png"
             />
           </div>
-          <div class="col">
+          <div class="col-md-3">
             <!-- <div class="row text-muted">Type</div> -->
             <div class="row">{{ item.item.name }}</div>
           </div>
-          <div class="col">
+          <div class="col-md-3">
             <a (click)="onMinus(item.item.id)"><i class="bi bi-dash"></i></a>
             <a class="border" style="cursor: default">{{ item.quantity }}</a>
             <a (click)="onPlus(item.item.id)"><i class="bi bi-plus"></i></a>
           </div>
-          <div class="col">
+          <div class="col-md-4">
             {{ item.item.price * item.quantity | number }} đ
             <a (click)="onDelete(item.id)"> <i class="bi bi-x close"></i></a>
           </div>
@@ -70,7 +70,7 @@
         <div class="col">TOTAL PRICE</div>
         <div class="col text-right">{{ total | number }} đ</div>
       </div>
-      <button class="btn btn-success">CHECKOUT</button>
+      <button (click)="onCheckout()" class="btn btn-success">CHECKOUT</button>
     </div>
   </div>
 </div>

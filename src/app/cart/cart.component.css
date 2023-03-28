@@ -37,7 +37,7 @@ body {
   }
 }
 .summary {
-  background-color: #ddd;
+  background-color: #81c2ff63;
   border-top-right-radius: 1rem;
   border-bottom-right-radius: 1rem;
   padding: 4vh;
@@ -111,9 +111,6 @@ input:focus::-webkit-input-placeholder {
   color: transparent;
 }
 .btn {
-  /* background-color: #000; */
-  /* border-color: #000; */
-  /* color: white; */
   width: 100%;
   font-size: 0.8rem;
   margin-top: 4vh;

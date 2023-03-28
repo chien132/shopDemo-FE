@@ -1,3 +1,21 @@
 .nav-item {
   font-size: 1.1rem;
 }
+.navbar {
+  background: linear-gradient(to left, rgb(111, 34, 184), rgb(10, 103, 180));
+}
+
+.navbar-nav.ml-auto > li {
+  margin-right: 0.5vw;
+}
+
+.nav-link.active {
+  border: 2px solid rgba(118, 234, 255, 0.2);
+  border-radius: 10px;
+  background: rgba(118, 234, 255, 0.1);
+  /* background-blend-mode: lighten; */
+}
+.nav-link {
+  text-align: center;
+  min-width: 6vw;
+}

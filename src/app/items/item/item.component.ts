@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from "@angular/core";
-import { StorageService } from "src/app/services/auth/storage.service";
 import { CartService } from "src/app/services/cart.service";
+import { JwtService } from "src/app/services/jwt.service";
+import { UtilService } from "src/app/services/util.service";
 
 @Component({
   selector: "app-item",
@@ -9,10 +10,11 @@ import { CartService } from "src/app/services/cart.service";
 })
 export class ItemComponent implements OnInit {
   @Input() item;
-  customerId = +this.storageService.getItem("customerId");
+  customerId = +this.jwtService.getId();
   constructor(
     private cartService: CartService,
-    private storageService: StorageService
+    private util: UtilService,
+    private jwtService: JwtService
   ) {}
 
   ngOnInit() {}
@@ -23,15 +25,22 @@ export class ItemComponent implements OnInit {
       itemId: this.item.id,
       quantity: 1,
     };
-    console.log(itemReq);
 
     if (this.customerId >= 0) {
       this.cartService.addItem(itemReq).subscribe(
         (res) => {
-          console.log(res);
+          this.util.sendMessage(
+            "Added " +
+              itemReq.quantity +
+              " " +
+              res.cartDetails.find((detail) => detail.item.id == itemReq.itemId)
+                .item.name +
+              " to cart!",
+            true
+          );
         },
         (err) => {
-          console.log(err);
+          this.util.sendMessage(err.error.message, false);
         }
       );
     }

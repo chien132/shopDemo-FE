@@ -1,11 +1,11 @@
-<div class="cart">
+<div class="cart" *ngIf="order != null">
   <div class="title">
     <div class="row">
       <div class="col">
-        <h4><b>Order detail:</b></h4>
+        <h6>{{ order.orderDate }} | Value: {{ total | number }} đ</h6>
       </div>
       <div class="col align-self-center text-right text-muted">
-        {{ order.orderDetails.length }} items
+        {{ totalItem }} items
       </div>
     </div>
   </div>
@@ -21,11 +21,11 @@
           src="https://bizweb.dktcdn.net/100/310/135/files/iphone-13-pink-select-2021.png"
         />
       </div>
-      <div class="col">
+      <div class="col-6">
         <!-- <div class="row text-muted">Type</div> -->
         <div class="row">{{ item.item.name }}</div>
       </div>
-      <div class="col">
+      <div class="col-4">
         <a class="border" style="cursor: default">{{ item.quantity }}</a>
       </div>
     </div>

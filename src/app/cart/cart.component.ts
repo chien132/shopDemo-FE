@@ -1,8 +1,10 @@
 import { Component, OnInit } from "@angular/core";
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { Cart } from "../models/cart.model";
-import { StorageService } from "../services/auth/storage.service";
 import { CartService } from "../services/cart.service";
+import { JwtService } from "../services/jwt.service";
+import { OrderService } from "../services/order.service";
+import { UtilService } from "../services/util.service";
 
 @Component({
   selector: "app-cart",
@@ -13,11 +15,15 @@ export class CartComponent implements OnInit {
   cart: Cart;
   total: number;
   totalItem: number;
+  customerId = -1;
 
   constructor(
     private cartService: CartService,
+    private orderService: OrderService,
     private route: ActivatedRoute,
-    private storageService: StorageService
+    private router: Router,
+    private util: UtilService,
+    private jwtService: JwtService
   ) {}
 
   calculateTotal() {
@@ -43,12 +49,13 @@ export class CartComponent implements OnInit {
       this.cart = cart;
       this.calculateTotal();
     });
+    this.customerId = +this.jwtService.getId();
   }
 
   onPlus(itemId: number) {
     this.cartService
       .addItem({
-        customerId: +this.storageService.getItem("customerId"),
+        customerId: +this.jwtService.getId(),
         itemId: itemId,
         quantity: 1,
       })
@@ -56,13 +63,13 @@ export class CartComponent implements OnInit {
         this.cart = res;
         this.calculateTotal();
       }),
-      (error) => console.log(error);
+      (err) => console.log(err);
   }
 
   onMinus(itemId: number) {
     this.cartService
       .addItem({
-        customerId: +this.storageService.getItem("customerId"),
+        customerId: +this.jwtService.getId(),
         itemId: itemId,
         quantity: -1,
       })
@@ -70,23 +77,37 @@ export class CartComponent implements OnInit {
         this.cart = res;
         this.calculateTotal();
       }),
-      (error) => console.log(error);
+      (err) => console.log(err);
   }
   onDelete(id: number) {
-    this.cartService.deleteItem(id).subscribe((res) => {}),
+    this.cartService.deleteItem(id).subscribe(
+      (res) => {},
       (err) => {
-        console.log(err);
-      };
-    setTimeout(() => {
-      this.cartService.getCart().subscribe(
-        (res) => {
-          this.cart = res;
-          this.calculateTotal();
-        },
-        (err) => {
-          console.log(err);
-        }
-      );
-    }, 50);
+        this.util.sendMessage(err.error.message, false);
+      }
+    ),
+      setTimeout(() => {
+        this.cartService.getCart().subscribe(
+          (res) => {
+            this.cart = res;
+            this.calculateTotal();
+          },
+          (err) => {
+            this.util.sendMessage(err.error.message, false);
+          }
+        );
+      }, 50);
+  }
+
+  onCheckout() {
+    this.orderService.confirmOrder(this.customerId).subscribe(
+      (res) => {
+        this.util.sendMessage("Your order has been confirmed!", true);
+        this.router.navigate(["/orders"]);
+      },
+      (err) => {
+        this.util.sendMessage(err.error.message, false);
+      }
+    );
   }
 }

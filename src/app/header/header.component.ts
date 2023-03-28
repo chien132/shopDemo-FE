@@ -1,7 +1,8 @@
-import { Component, OnChanges, OnInit, SimpleChanges } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { StorageService } from "../services/auth/storage.service";
 import { LoginService } from "../services/auth/login.service";
+import { JwtService } from "../services/jwt.service";
 
 @Component({
   selector: "app-header",
@@ -9,24 +10,26 @@ import { LoginService } from "../services/auth/login.service";
   styleUrls: ["./header.component.css"],
 })
 export class HeaderComponent implements OnInit {
-  username = this.storageService.getItem("username");
+  username = this.jwtService.getUsername();
   constructor(
     private loginService: LoginService,
     private router: Router,
-    private storageService: StorageService
+    private storageService: StorageService,
+    private jwtService: JwtService
   ) {}
   ngOnInit() {
     this.storageService.watchStorage().subscribe((data) => {
-      if (data == "added" || data == "removed") {
-        this.username = this.storageService.getItem("username");
-      }
+      // if (data == "added" || data == "removed") {
+      this.username = this.jwtService.getUsername();
+      console.log(this.username);
+      // }
     });
   }
 
   logOut() {
     this.loginService.logOut();
-    if (this.router.url === "/cart") {
-      this.router.navigate(["/items"]);
+    if (this.router.url === "/cart" || this.router.url.includes("/orders")) {
+      this.router.navigate(["/login"]);
     }
   }
 }

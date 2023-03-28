@@ -1,6 +1,8 @@
+import { Item } from "./item.model";
+
 export class OrderDetail {
   id: number;
   quantity: number;
-  itemId: number;
+  item: Item;
   orderId: number;
 }

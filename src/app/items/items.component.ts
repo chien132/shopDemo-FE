@@ -17,8 +17,8 @@ export class ItemsComponent implements OnInit {
         this.items = response;
         // console.log(response);
       },
-      (error) => {
-        console.log(error);
+      (err) => {
+        console.log(err);
       }
     );
   }
