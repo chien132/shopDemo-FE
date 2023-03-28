@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
-import { Customer } from "src/app/models/customer.model";
+import { StorageService } from "./storage.service";
 
 @Injectable({
   providedIn: "root",
@@ -9,22 +9,27 @@ import { Customer } from "src/app/models/customer.model";
 export class LoginService {
   baseUrl = "http://localhost:8080/api/";
 
-  constructor(private httpClient: HttpClient) {}
+  constructor(
+    private httpClient: HttpClient,
+    private storageService: StorageService
+  ) {}
 
   logIn(customer): Observable<AuthModel> {
     return this.httpClient.post<AuthModel>(`${this.baseUrl}login`, customer);
   }
 
-  setToken(token: string, username: string, type: string) {
-    localStorage.setItem("jwtToken", token);
-    localStorage.setItem("usename", username);
-    localStorage.setItem("type", type);
+  setToken(id: number, token: string, username: string, type: string) {
+    this.storageService.setItem("customerId", String(id));
+    this.storageService.setItem("username", username);
+    this.storageService.setItem("type", type);
+    this.storageService.setItem("jwtToken", token);
   }
 
   logOut() {
-    localStorage.removeItem("jwtToken");
-    localStorage.removeItem("usename");
-    localStorage.removeItem("type");
+    this.storageService.removeItem("customerId");
+    this.storageService.removeItem("username");
+    this.storageService.removeItem("type");
+    this.storageService.removeItem("jwtToken");
   }
 }
 

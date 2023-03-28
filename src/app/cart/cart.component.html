@@ -1,0 +1,76 @@
+<div class="card mt-5">
+  <div class="row">
+    <div class="col-md-8 cart">
+      <div class="title">
+        <div class="row">
+          <div class="col">
+            <h4><b>Shopping Cart</b></h4>
+          </div>
+          <div class="col align-self-center text-right text-muted">
+            {{ totalItem }} items
+          </div>
+        </div>
+      </div>
+      <div
+        class="row border-top border-bottom"
+        *ngFor="let item of cart.cartDetails"
+      >
+        <div class="row main align-items-center">
+          <div class="col-2">
+            <img
+              class="img-fluid"
+              src="https://images.stockx.com/images/NVIDIA-Founders-GeForce-RTX-4090-24G-Graphics-CardB-Graphics-Card-900-1G136-2530-000.jpg"
+              src="https://bizweb.dktcdn.net/100/310/135/files/iphone-13-pink-select-2021.png"
+            />
+          </div>
+          <div class="col">
+            <!-- <div class="row text-muted">Type</div> -->
+            <div class="row">{{ item.item.name }}</div>
+          </div>
+          <div class="col">
+            <a (click)="onMinus(item.item.id)"><i class="bi bi-dash"></i></a>
+            <a class="border" style="cursor: default">{{ item.quantity }}</a>
+            <a (click)="onPlus(item.item.id)"><i class="bi bi-plus"></i></a>
+          </div>
+          <div class="col">
+            {{ item.item.price * item.quantity | number }} đ
+            <a (click)="onDelete(item.id)"> <i class="bi bi-x close"></i></a>
+          </div>
+        </div>
+      </div>
+
+      <div class="back-to-shop">
+        <a routerLink="/items"
+          ><i class="bi bi-arrow-return-left"></i>
+          <span class="text-muted"> Back to shop</span>
+        </a>
+      </div>
+    </div>
+    <div class="col-md-4 summary">
+      <div>
+        <h5><b>Summary</b></h5>
+      </div>
+      <hr />
+      <div class="row">
+        <div class="col" style="padding-left: 0">ITEMS: {{ totalItem }}</div>
+        <div class="col text-right">{{ total | number }} đ</div>
+      </div>
+      <form>
+        <div class="input-group mb-3">
+          <select class="select">
+            <option selected value="1">Standard-Delivery (Free)</option>
+          </select>
+          <div class="input-group-append"></div>
+        </div>
+      </form>
+      <div
+        class="row"
+        style="border-top: 1px solid rgba(0, 0, 0, 0.1); padding: 2vh 0"
+      >
+        <div class="col">TOTAL PRICE</div>
+        <div class="col text-right">{{ total | number }} đ</div>
+      </div>
+      <button class="btn btn-success">CHECKOUT</button>
+    </div>
+  </div>
+</div>

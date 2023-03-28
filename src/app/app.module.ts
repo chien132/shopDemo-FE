@@ -10,6 +10,9 @@ import { ItemComponent } from "./items/item/item.component";
 import { HeaderComponent } from "./header/header.component";
 import { ErrorPageComponent } from "./error-page/error-page.component";
 import { AuthInterceptor } from "./services/auth/auth.interceptor";
+import { CartComponent } from "./cart/cart.component";
+import { OrderListComponent } from './order-list/order-list.component';
+import { OrderComponent } from './order-list/order/order.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +22,9 @@ import { AuthInterceptor } from "./services/auth/auth.interceptor";
     LoginComponent,
     ItemsComponent,
     ItemComponent,
+    CartComponent,
+    OrderListComponent,
+    OrderComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, HttpClientModule],
   providers: [

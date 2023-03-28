@@ -1,0 +1,33 @@
+<div class="cart">
+  <div class="title">
+    <div class="row">
+      <div class="col">
+        <h4><b>Order detail:</b></h4>
+      </div>
+      <div class="col align-self-center text-right text-muted">
+        {{ order.orderDetails.length }} items
+      </div>
+    </div>
+  </div>
+  <div
+    class="row border-top border-bottom"
+    *ngFor="let item of order.orderDetails"
+  >
+    <div class="row main align-items-center">
+      <div class="col-2">
+        <img
+          class="img-fluid"
+          src="https://images.stockx.com/images/NVIDIA-Founders-GeForce-RTX-4090-24G-Graphics-CardB-Graphics-Card-900-1G136-2530-000.jpg"
+          src="https://bizweb.dktcdn.net/100/310/135/files/iphone-13-pink-select-2021.png"
+        />
+      </div>
+      <div class="col">
+        <!-- <div class="row text-muted">Type</div> -->
+        <div class="row">{{ item.item.name }}</div>
+      </div>
+      <div class="col">
+        <a class="border" style="cursor: default">{{ item.quantity }}</a>
+      </div>
+    </div>
+  </div>
+</div>

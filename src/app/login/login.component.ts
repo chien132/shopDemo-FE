@@ -17,7 +17,7 @@ declare var jQuery: any;
 export class LoginComponent implements OnInit {
   @ViewChild("usernameInput", { static: true }) usernameRef: ElementRef;
   @ViewChild("passwordInput", { static: true }) passwordRef: ElementRef;
-  @ViewChild("successModal", { static: true }) successModal: ElementRef;
+  @ViewChild("liveToast", { static: true }) successToast: ElementRef;
   @ViewChild("invalidFeedback", { static: true }) invalidFeedback: ElementRef;
 
   authAccount: AuthModel;
@@ -39,16 +39,17 @@ export class LoginComponent implements OnInit {
     this.loginService.logIn(this.customer).subscribe(
       (response) => {
         this.loginService.setToken(
+          response.id,
           response.accessToken,
           response.username,
           response.roles[0] === "ROLE_OWNER" ? "OWNER" : "CUSTOMER"
         );
 
-        console.log(response);
+        // console.log(response);
 
-        jQuery(this.successModal.nativeElement).modal("show");
+        jQuery(this.successToast.nativeElement).toast("show");
         setTimeout(() => {
-          jQuery(this.successModal.nativeElement).modal("hide");
+          // jQuery(this.successToast.nativeElement).toast("hide");
           this.router.navigate(["/items"]);
         }, 1000);
       },

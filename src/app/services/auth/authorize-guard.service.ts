@@ -6,20 +6,22 @@ import {
   Router,
 } from "@angular/router";
 import { Observable } from "rxjs";
-import { JWTTokenService } from "./jwt-token.service";
 
 @Injectable({
   providedIn: "root",
 })
 export class AuthorizeGuard implements CanActivate {
-  constructor(private router: Router, private jwtService: JWTTokenService) {}
+  constructor(private router: Router) {}
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<boolean> | Promise<boolean> | boolean {
-    if (this.jwtService.getUser()) {
-      if (this.jwtService.isTokenExpired()) {
+    if (true) {
+      // check for user existance
+      if (true) {
+        //check expire time, if expired
         // Should Redirect Sig-In Page
+        return true;
       } else {
         return true;
       }
