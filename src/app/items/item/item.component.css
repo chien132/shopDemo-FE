@@ -1,10 +1,6 @@
 .card {
   width: 222px;
 }
-/*
-body {
-  background: #eee;
-} */
 
 .product-grid {
   font-family: "Poppins", sans-serif;
@@ -65,9 +61,9 @@ body {
   background: #333;
 }
 .product-grid .add-to-cart {
-  background: #a5ba8d;
+  background: #65db78;
   color: #fff;
-  font-size: 16px;
+  font-size: 12px;
   text-transform: uppercase;
   letter-spacing: 2px;
   width: 100%;
@@ -106,12 +102,7 @@ body {
   font-size: 14px;
   font-weight: 600;
 }
-.product-grid .price span {
-  color: #888;
-  font-size: 13px;
-  font-weight: 400;
-  text-decoration: line-through;
-}
+
 @media screen and (max-width: 990px) {
   .product-grid {
     margin-bottom: 30px;

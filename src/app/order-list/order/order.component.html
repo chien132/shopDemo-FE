@@ -2,10 +2,10 @@
   <div class="title">
     <div class="row">
       <div class="col">
-        <h6>{{ order.orderDate }} | Value: {{ total | number }} đ</h6>
+        <h6>{{ order.orderDate }} | Value: {{ total.value | number }} đ</h6>
       </div>
       <div class="col align-self-center text-right text-muted">
-        {{ totalItem }} items
+        {{ total.number }} items
       </div>
     </div>
   </div>
@@ -21,12 +21,14 @@
           src="https://bizweb.dktcdn.net/100/310/135/files/iphone-13-pink-select-2021.png"
         />
       </div>
-      <div class="col-6">
-        <!-- <div class="row text-muted">Type</div> -->
-        <div class="row">{{ item.item.name }}</div>
-      </div>
       <div class="col-4">
-        <a class="border" style="cursor: default">{{ item.quantity }}</a>
+        <!-- <div class="row text-muted">Type</div> -->
+        {{ item.item.name }}
+      </div>
+      <div class="col-2 text-right">{{ item.item.price | number }}</div>
+      <div class="col text-right">x {{ item.quantity }}</div>
+      <div class="col-3 text-right">
+        {{ item.quantity * item.item.price | number }}đ
       </div>
     </div>
   </div>

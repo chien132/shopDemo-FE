@@ -22,7 +22,6 @@ export class CartComponent implements OnInit {
     private orderService: OrderService,
     private route: ActivatedRoute,
     private router: Router,
-    private util: UtilService,
     private jwtService: JwtService
   ) {}
 
@@ -83,7 +82,7 @@ export class CartComponent implements OnInit {
     this.cartService.deleteItem(id).subscribe(
       (res) => {},
       (err) => {
-        this.util.sendMessage(err.error.message, false);
+        UtilService.sendMessage(err.error.message, false);
       }
     ),
       setTimeout(() => {
@@ -93,7 +92,7 @@ export class CartComponent implements OnInit {
             this.calculateTotal();
           },
           (err) => {
-            this.util.sendMessage(err.error.message, false);
+            UtilService.sendMessage(err.error.message, false);
           }
         );
       }, 50);
@@ -102,11 +101,12 @@ export class CartComponent implements OnInit {
   onCheckout() {
     this.orderService.confirmOrder(this.customerId).subscribe(
       (res) => {
-        this.util.sendMessage("Your order has been confirmed!", true);
+        UtilService.sendMessage("Your order has been confirmed!", true);
         this.router.navigate(["/orders"]);
+        UtilService.hideModal("confirmOrderModal");
       },
       (err) => {
-        this.util.sendMessage(err.error.message, false);
+        UtilService.sendMessage(err.error.message, false);
       }
     );
   }

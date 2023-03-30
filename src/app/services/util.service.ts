@@ -5,7 +5,7 @@ declare var $: any;
   providedIn: "root",
 })
 export class UtilService {
-  sendMessage(message: string, success: boolean) {
+  static sendMessage(message: string, success: boolean) {
     if (!success) {
       $("body").find(".toast-header").first().addClass("bg-danger");
       $("body").find("#toastHeader").first().html("Failed");
@@ -16,5 +16,9 @@ export class UtilService {
     }
     $("body").find("#toastMessage").first().html(message);
     $("body").find("#liveToast").first().toast("show");
+  }
+
+  static hideModal(id: string) {
+    $(`#${id}`).modal("hide");
   }
 }

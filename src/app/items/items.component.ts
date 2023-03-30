@@ -15,7 +15,6 @@ export class ItemsComponent implements OnInit {
     this.itemService.getListItems().subscribe(
       (response) => {
         this.items = response;
-        // console.log(response);
       },
       (err) => {
         console.log(err);

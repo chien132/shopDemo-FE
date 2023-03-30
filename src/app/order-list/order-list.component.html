@@ -1,10 +1,10 @@
 <div class="card mt-2 mx-0">
   <div class="row">
-    <div class="col-md-4">
+    <!-- <div class="col-md-4">
       <ul *ngIf="orders != null" class="list-group">
         <a
           *ngFor="let o of orders"
-          [ngClass]="{ active: selectedOrder == o.id }"
+          [ngClass]="{ active: selectedOrder.id == o.id }"
           class="list-group-item list-group-item-action"
           aria-current="true"
           (click)="onChoose(o)"
@@ -12,9 +12,30 @@
           #{{ o.id }}: {{ o.orderDate }} : {{ o.orderDetails[0].item.name }}...
         </a>
       </ul>
+    </div> -->
+    <!--  -->
+    <div class="col-md-4 summary">
+      <div class="col-md-4">
+        <ul *ngIf="orders != null" class="list-group">
+          <a
+            *ngFor="let o of orders"
+            [ngClass]="{ active: selectedOrder.id == o.id }"
+            class="list-group-item list-group-item-action"
+            aria-current="true"
+            (click)="onChoose(o)"
+          >
+            #{{ o.id }}: {{ o.orderDate }}
+          </a>
+        </ul>
+      </div>
     </div>
+    <!--  -->
     <div class="col-md-8">
-      <app-order *ngIf="orders != null" [order]="orders[0]"></app-order>
+      <app-order
+        *ngIf="orders != null"
+        [order]="orders[0]"
+        [total]="total"
+      ></app-order>
     </div>
   </div>
 </div>

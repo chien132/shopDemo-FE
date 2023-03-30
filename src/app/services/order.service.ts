@@ -9,8 +9,19 @@ import { JwtService } from "./jwt.service";
 })
 export class OrderService {
   baseUrl = "http://localhost:8080/api/orders";
-  selectedOrder: Order;
   @Output() selectOrder = new EventEmitter<Order>();
+
+  getTotal(order: Order): { number: number; value: number } {
+    let number = 0,
+      value = 0;
+    if (order != null && order.orderDetails.length > 0) {
+      order.orderDetails.forEach((d) => {
+        number += +d.quantity;
+        value += +d.quantity * d.item.price;
+      });
+    }
+    return { number: number, value: value };
+  }
 
   constructor(private http: HttpClient, private jwtService: JwtService) {}
 

@@ -21,7 +21,6 @@ export class HeaderComponent implements OnInit {
     this.storageService.watchStorage().subscribe((data) => {
       // if (data == "added" || data == "removed") {
       this.username = this.jwtService.getUsername();
-      console.log(this.username);
       // }
     });
   }

@@ -10,24 +10,25 @@ import { UtilService } from "../services/util.service";
 })
 export class OrderListComponent implements OnInit {
   orders: Order[];
-  selectedOrder: number;
-  constructor(private orderService: OrderService, private util: UtilService) {}
+  selectedOrder: Order;
+  total;
+  constructor(private orderService: OrderService) {}
 
   ngOnInit() {
     this.orderService.getOrderList().subscribe(
       (res) => {
         this.orders = res.reverse();
-        this.selectedOrder = this.orders[0].id;
+        this.selectedOrder = this.orders[0];
+        this.total = this.orderService.getTotal(this.selectedOrder);
       },
       (err) => {
-        this.util.sendMessage(err.error.message, false);
+        UtilService.sendMessage(err.error.message, false);
       }
     );
   }
 
   onChoose(o: Order) {
-    this.selectedOrder = o.id;
+    this.selectedOrder = o;
     this.orderService.selectOrder.emit(o);
-    console.log(this.selectedOrder);
   }
 }

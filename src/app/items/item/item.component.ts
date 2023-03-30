@@ -13,7 +13,6 @@ export class ItemComponent implements OnInit {
   customerId = +this.jwtService.getId();
   constructor(
     private cartService: CartService,
-    private util: UtilService,
     private jwtService: JwtService
   ) {}
 
@@ -29,7 +28,7 @@ export class ItemComponent implements OnInit {
     if (this.customerId >= 0) {
       this.cartService.addItem(itemReq).subscribe(
         (res) => {
-          this.util.sendMessage(
+          UtilService.sendMessage(
             "Added " +
               itemReq.quantity +
               " " +
@@ -40,7 +39,7 @@ export class ItemComponent implements OnInit {
           );
         },
         (err) => {
-          this.util.sendMessage(err.error.message, false);
+          UtilService.sendMessage(err.error.message, false);
         }
       );
     }

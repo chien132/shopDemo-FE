@@ -19,8 +19,7 @@ export class LoginComponent {
   constructor(
     private loginService: LoginService,
     private router: Router,
-    private jwtService: JwtService,
-    private util: UtilService
+    private jwtService: JwtService
   ) {}
   onLogin() {
     this.customer = {
@@ -30,7 +29,7 @@ export class LoginComponent {
     this.loginService.logIn(this.customer).subscribe(
       (response) => {
         this.loginService.setToken(response.token);
-        this.util.sendMessage("You are now logged in", true);
+        UtilService.sendMessage("You are now logged in", true);
         this.router.navigate(["/items"]);
         console.log(this.jwtService.getDecodeToken());
       },
@@ -38,11 +37,14 @@ export class LoginComponent {
         switch (error.status) {
           case 400:
           case 401:
-            this.util.sendMessage("Username or password is incorrect!", false);
+            UtilService.sendMessage(
+              "Username or password is incorrect!",
+              false
+            );
             break;
           default:
-            // this.util.sendMessage(error.error.message, false);
-            this.util.sendMessage("Can not connect to the server!", false);
+            // UtilService.sendMessage(error.error.message, false);
+            UtilService.sendMessage("Cannot connect to the server!", false);
             console.log(error);
         }
       }
