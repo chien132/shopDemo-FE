@@ -1,0 +1,33 @@
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th class="text-center" scope="col">#</th>
+      <th class="text-center" scope="col-7">Name</th>
+      <th class="text-center" scope="col-2">Price</th>
+      <th class="text-center" scope="col-2">
+        <button
+          class="btn btn-success"
+          style="right: 1vw; top: 10vh"
+          (click)="onAdd()"
+        >
+          Add
+        </button>
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of items">
+      <th class="text-center" scope="row">{{ item.id }}</th>
+      <td>{{ item.name }}</td>
+      <td class="text-right">{{ item.price | number }} đ</td>
+      <td class="text-center">
+        <button (click)="onEditt(item)" class="btn btn-outline-primary">
+          <i class="bi bi-pencil-square"></i></button
+        ><button (click)="onDelete(item)" class="btn btn-outline-danger">
+          <i class="bi bi-trash3-fill"></i>
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<div #modal></div>

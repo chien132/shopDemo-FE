@@ -35,7 +35,10 @@ export class JwtService {
     this.decodeToken();
     return this.decodedToken ? this.decodedToken.id : null;
   }
-
+  getRole() {
+    this.decodeToken();
+    return this.decodedToken ? this.decodedToken.role : null;
+  }
   getExpiryTime() {
     this.decodeToken();
     return this.decodedToken ? this.decodedToken.exp : null;

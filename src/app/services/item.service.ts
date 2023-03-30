@@ -15,7 +15,7 @@ export class ItemService {
     return this.httpClient.get<Item[]>(`${this.baseUrl}`);
   }
 
-  getCustomerContent() {
-    return this.httpClient.get("http://localhost:8080/api/test/admin");
+  deleteItem(id: number) {
+    return this.httpClient.delete(`${this.baseUrl}/${id}`);
   }
 }

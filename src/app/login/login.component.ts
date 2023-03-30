@@ -30,7 +30,11 @@ export class LoginComponent {
       (response) => {
         this.loginService.setToken(response.token);
         UtilService.sendMessage("You are now logged in", true);
-        this.router.navigate(["/items"]);
+        if (this.jwtService.getRole() === "ROLE_OWNER") {
+          this.router.navigate(["/adminpanel"]);
+        } else {
+          this.router.navigate(["/items"]);
+        }
         console.log(this.jwtService.getDecodeToken());
       },
       (error: HttpErrorResponse) => {

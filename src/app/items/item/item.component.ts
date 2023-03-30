@@ -19,29 +19,35 @@ export class ItemComponent implements OnInit {
   ngOnInit() {}
 
   addToCart() {
+    let role = this.jwtService.getRole();
+    if (!role || role === "ROLE_OWNER") {
+      UtilService.sendMessage(
+        "You have to login as Customer to do this",
+        false
+      );
+      return;
+    }
     let itemReq = {
       customerId: this.customerId,
       itemId: this.item.id,
       quantity: 1,
     };
 
-    if (this.customerId >= 0) {
-      this.cartService.addItem(itemReq).subscribe(
-        (res) => {
-          UtilService.sendMessage(
-            "Added " +
-              itemReq.quantity +
-              " " +
-              res.cartDetails.find((detail) => detail.item.id == itemReq.itemId)
-                .item.name +
-              " to cart!",
-            true
-          );
-        },
-        (err) => {
-          UtilService.sendMessage(err.error.message, false);
-        }
-      );
-    }
+    this.cartService.addItem(itemReq).subscribe(
+      (res) => {
+        UtilService.sendMessage(
+          "Added " +
+            itemReq.quantity +
+            " " +
+            res.cartDetails.find((detail) => detail.item.id == itemReq.itemId)
+              .item.name +
+            " to cart!",
+          true
+        );
+      },
+      (err) => {
+        UtilService.sendMessage(err.error.message, false);
+      }
+    );
   }
 }

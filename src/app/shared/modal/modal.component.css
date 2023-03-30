@@ -1,0 +1,28 @@
+.modal-container {
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-dialog.modal-dialog.modal-dialog-centered {
+  width: inherit;
+}
+
+.btn-container {
+  display: flex;
+}
+.btn {
+  padding: 0;
+  margin: 0 1vh;
+  min-width: 6vw;
+  height: 4vh;
+}

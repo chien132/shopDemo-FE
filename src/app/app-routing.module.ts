@@ -1,5 +1,7 @@
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
+import { ItemPanelComponent } from "./admin-panel/item-panel/item-panel.component";
+import { OrderPanelComponent } from "./admin-panel/order-panel/order-panel.component";
 import { CartComponent } from "./cart/cart.component";
 import { ErrorPageComponent } from "./error-page/error-page.component";
 import { ItemsComponent } from "./items/items.component";
@@ -11,6 +13,21 @@ const routes: Routes = [
   {
     path: "login",
     component: LoginComponent,
+  },
+  {
+    path: "adminpanel",
+    component: null,
+    canActivate: [],
+    children: [
+      {
+        path: "item",
+        component: ItemPanelComponent,
+      },
+      {
+        path: "order",
+        component: OrderPanelComponent,
+      },
+    ],
   },
   {
     path: "items",

@@ -1,0 +1,28 @@
+table.table.table-bordered {
+  height: 90vh;
+  overflow-y: scroll;
+}
+
+.table thead th {
+  background: lightblue;
+}
+.table tr:hover {
+  background: #ffdd9f85;
+}
+.table td {
+  padding: 0.5rem 0.2rem;
+}
+
+.btn {
+  padding: 0;
+  margin: 0 1vh;
+  min-width: 6vw;
+  height: 4vh;
+}
+
+td .btn {
+  padding: 0;
+  margin: 0 2px;
+  min-width: 3vw;
+  height: 4vh;
+}

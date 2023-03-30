@@ -1,0 +1,31 @@
+<div class="modal-container" (click)="closeMe()">
+  <div class="modal-dialog modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">{{ title }}</h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="close"
+        >
+          <span (click)="closeMe()" aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">{{ body }}</div>
+      <div class="modal-footer btn-container">
+        <button
+          (click)="closeMe()"
+          type="button"
+          class="btn btn-secondary"
+          data-dismiss="modal"
+        >
+          Cancel
+        </button>
+        <button (click)="confirm()" type="button" class="btn btn-danger">
+          Confirm
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

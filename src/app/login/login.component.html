@@ -1,51 +1,50 @@
-<div class="row justify-content-md-center my-5 pt-5">
-  <div class="col col-5">
-    <form>
-      <!-- Username input -->
-      <div class="form-outline form-row mb-4">
-        <div class="col-12 mb-4">
-          <label class="form-label" for="usernameInput">Username</label>
+<div class="justify-content-center">
+  <div class="card">
+    <div class="card-header text-left">
+      <h3>Log In</h3>
+    </div>
+    <div class="card-body">
+      <form>
+        <div class="input-group form-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text">
+              <i class="bi bi-person-square text-light"></i>
+            </span>
+          </div>
           <input
-            type="text"
-            id="usernameInput"
             #usernameInput
+            type="text"
             class="form-control"
+            placeholder="username"
           />
         </div>
-      </div>
-
-      <!-- Password input -->
-      <div class="form-outline form-row">
-        <div class="col-12 mb-4">
-          <label class="form-label" for="passwordInput">Password</label>
+        <div class="input-group form-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text"
+              ><i class="bi bi-key-fill text-light"></i
+            ></span>
+          </div>
           <input
-            type="password"
-            id="passwordInput"
             #passwordInput
+            type="password"
             class="form-control"
+            placeholder="password"
           />
         </div>
-      </div>
 
-      <div class="row mb-4 justify-content-center">
-        <div class="col">
-          <a>Forgot password?</a>
-        </div>
+        <button
+          type="button"
+          (click)="onLogin()"
+          class="btn btn-primary float-right btn-block p-2 mt-4"
+        >
+          Login
+        </button>
+      </form>
+    </div>
+    <div class="card-footer">
+      <div class="d-flex justify-content-center links">
+        Don't have an account?<a href="#">Sign Up</a>
       </div>
-
-      <!-- Submit button -->
-      <button
-        type="button"
-        class="btn btn-primary btn-block mb-4"
-        (click)="onLogin()"
-      >
-        Sign in
-      </button>
-      <p class="text-danger d-flex justify-content-center" #invalidFeedback></p>
-      <!-- Register buttons -->
-      <div class="text-center">
-        <p>Not a member? <a>Register</a></p>
-      </div>
-    </form>
+    </div>
   </div>
 </div>

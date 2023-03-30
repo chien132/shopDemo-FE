@@ -11,8 +11,11 @@ import { HeaderComponent } from "./header/header.component";
 import { ErrorPageComponent } from "./error-page/error-page.component";
 import { AuthInterceptor } from "./services/auth/auth.interceptor";
 import { CartComponent } from "./cart/cart.component";
-import { OrderListComponent } from './order-list/order-list.component';
-import { OrderComponent } from './order-list/order/order.component';
+import { OrderListComponent } from "./order-list/order-list.component";
+import { OrderComponent } from "./order-list/order/order.component";
+import { ItemPanelComponent } from "./admin-panel/item-panel/item-panel.component";
+import { OrderPanelComponent } from "./admin-panel/order-panel/order-panel.component";
+import { ModalComponent } from "./shared/modal/modal.component";
 
 @NgModule({
   declarations: [
@@ -25,8 +28,12 @@ import { OrderComponent } from './order-list/order/order.component';
     CartComponent,
     OrderListComponent,
     OrderComponent,
+    ItemPanelComponent,
+    OrderPanelComponent,
+    ModalComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, HttpClientModule],
+  entryComponents: [ModalComponent],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,

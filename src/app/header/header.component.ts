@@ -11,6 +11,7 @@ import { JwtService } from "../services/jwt.service";
 })
 export class HeaderComponent implements OnInit {
   username = this.jwtService.getUsername();
+  role = this.jwtService.getRole();
   constructor(
     private loginService: LoginService,
     private router: Router,
@@ -21,13 +22,18 @@ export class HeaderComponent implements OnInit {
     this.storageService.watchStorage().subscribe((data) => {
       // if (data == "added" || data == "removed") {
       this.username = this.jwtService.getUsername();
+      this.role = this.jwtService.getRole();
       // }
     });
   }
 
   logOut() {
     this.loginService.logOut();
-    if (this.router.url === "/cart" || this.router.url.includes("/orders")) {
+    if (
+      this.router.url.includes("/cart") ||
+      this.router.url.includes("/orders") ||
+      this.router.url.includes("/adminpanel")
+    ) {
       this.router.navigate(["/login"]);
     }
   }
