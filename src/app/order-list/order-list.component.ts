@@ -15,7 +15,7 @@ export class OrderListComponent implements OnInit {
   constructor(private orderService: OrderService) {}
 
   ngOnInit() {
-    this.orderService.getOrderList().subscribe(
+    this.orderService.getOrdersByCustomer().subscribe(
       (res) => {
         this.orders = res.reverse();
         this.selectedOrder = this.orders[0];

@@ -8,17 +8,28 @@ import { ItemService } from "../services/item.service";
   styleUrls: ["./items.component.css"],
 })
 export class ItemsComponent implements OnInit {
+  allItems: Item[];
   items: Item[];
   constructor(private itemService: ItemService) {}
 
   ngOnInit() {
     this.itemService.getListItems().subscribe(
       (response) => {
-        this.items = response;
+        this.allItems = response;
+        this.items = response.filter((item) =>
+          new RegExp(this.itemService.currentSearch, "i").test(item.name)
+        );
       },
       (err) => {
         console.log(err);
       }
     );
+
+    this.itemService.itemFilter.subscribe((search) => {
+      console.log(search);
+      this.items = this.allItems.filter((item) =>
+        new RegExp(search, "i").test(item.name)
+      );
+    });
   }
 }

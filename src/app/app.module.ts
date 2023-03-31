@@ -16,6 +16,8 @@ import { OrderComponent } from "./order-list/order/order.component";
 import { ItemPanelComponent } from "./admin-panel/item-panel/item-panel.component";
 import { OrderPanelComponent } from "./admin-panel/order-panel/order-panel.component";
 import { ModalComponent } from "./shared/modal/modal.component";
+import { FilterPipe } from "./shared/filter.pipe";
+import { FormsModule } from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -31,8 +33,9 @@ import { ModalComponent } from "./shared/modal/modal.component";
     ItemPanelComponent,
     OrderPanelComponent,
     ModalComponent,
+    FilterPipe,
   ],
-  imports: [BrowserModule, AppRoutingModule, HttpClientModule],
+  imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule],
   entryComponents: [ModalComponent],
   providers: [
     {

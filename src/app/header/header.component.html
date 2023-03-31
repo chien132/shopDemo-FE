@@ -11,9 +11,21 @@
     >
       <span class="navbar-toggler-icon"></span>
     </button>
-    <a class="navbar-brand">Shop Demo</a>
+    <a class="navbar-brand"><i class="bi bi-house"></i> Shop Demo</a>
     <div class="collapse navbar-collapse" id="navbarContent">
       <ul class="navbar-nav ml-auto">
+        <div *ngIf="currentRoute == '/items'" class="form-inline my-2 my-lg-0">
+          <input
+            class="form-control mr-sm-2"
+            placeholder="Search"
+            value=""
+            [(ngModel)]="search"
+            (ngModelChange)="onInput($event)"
+          />
+          <!-- <button class="btn btn-outline-success my-2 my-sm-0" type="submit"> -->
+          <!-- Search -->
+          <!-- </button> -->
+        </div>
         <!-- Item button -->
         <li *ngIf="role != 'ROLE_OWNER'" class="nav-item">
           <a
@@ -53,7 +65,7 @@
             class="nav-link"
             routerLink="/adminpanel/item"
             routerLinkActive="active"
-            ><i class="bi bi-gear-fill"></i> Item Panel</a
+            ><i class="bi bi-database-fill-gear"></i> Item Panel</a
           >
         </li>
         <!-- Admin order panel -->
@@ -62,7 +74,7 @@
             class="nav-link"
             routerLink="/adminpanel/order"
             routerLinkActive="active"
-            ><i class="bi bi-gear-fill"></i> Order Panel</a
+            ><i class="bi bi-clipboard-data-fill"></i> Order Panel</a
           >
         </li>
         <!-- Account dropdown -->
@@ -71,7 +83,8 @@
             class="nav-link dropdown-toggle"
             type="button"
             data-toggle="dropdown"
-            >{{ username | titlecase }} <span class="caret"></span
+            ><i class="bi bi-person-fill"></i> {{ username | titlecase }}
+            <span class="caret"></span
           ></a>
           <ul class="dropdown-menu">
             <!-- Logout button -->

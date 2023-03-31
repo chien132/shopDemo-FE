@@ -25,11 +25,19 @@ export class OrderService {
 
   constructor(private http: HttpClient, private jwtService: JwtService) {}
 
-  getOrderList(): Observable<Order[]> {
+  getAllOrders(): Observable<Order[]> {
+    return this.http.get<Order[]>(this.baseUrl);
+  }
+
+  getOrdersByCustomer(): Observable<Order[]> {
     return this.http.get<Order[]>(`${this.baseUrl}/${this.jwtService.getId()}`);
   }
 
   confirmOrder(customerId: number): Observable<Order> {
     return this.http.post<Order>(this.baseUrl, customerId);
+  }
+
+  completeOrder(orderId: number): Observable<Order> {
+    return this.http.put<Order>(this.baseUrl, orderId);
   }
 }

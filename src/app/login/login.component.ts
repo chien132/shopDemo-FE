@@ -26,6 +26,13 @@ export class LoginComponent {
       username: this.usernameRef.nativeElement.value,
       password: this.passwordRef.nativeElement.value,
     };
+    if (
+      this.customer.username.length == 0 ||
+      this.customer.password.length == 0
+    ) {
+      UtilService.sendMessage("Please input all information!", false);
+      return;
+    }
     this.loginService.logIn(this.customer).subscribe(
       (response) => {
         this.loginService.setToken(response.token);

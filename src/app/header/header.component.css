@@ -2,7 +2,7 @@
   font-size: 1rem;
 }
 .navbar {
-  background: linear-gradient(to left, rgb(111, 34, 184), rgb(10, 103, 180));
+  background: linear-gradient(to right, rgb(243 92 238), rgb(10, 103, 180));
 }
 
 .navbar-nav.ml-auto > li {

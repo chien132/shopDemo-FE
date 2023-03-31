@@ -1,8 +1,10 @@
 import { Component, OnInit } from "@angular/core";
-import { Router } from "@angular/router";
+import { NavigationEnd, Router } from "@angular/router";
 import { StorageService } from "../services/auth/storage.service";
 import { LoginService } from "../services/auth/login.service";
 import { JwtService } from "../services/jwt.service";
+import { filter } from "rxjs/operators";
+import { ItemService } from "../services/item.service";
 
 @Component({
   selector: "app-header",
@@ -12,12 +14,26 @@ import { JwtService } from "../services/jwt.service";
 export class HeaderComponent implements OnInit {
   username = this.jwtService.getUsername();
   role = this.jwtService.getRole();
+  currentRoute: string;
+
   constructor(
     private loginService: LoginService,
     private router: Router,
     private storageService: StorageService,
-    private jwtService: JwtService
-  ) {}
+    private jwtService: JwtService,
+    private itemService: ItemService
+  ) {
+    this.router.events
+      .pipe(filter((event) => event instanceof NavigationEnd))
+      .subscribe((event: NavigationEnd) => {
+        this.currentRoute = event.url;
+      });
+  }
+
+  onInput(event) {
+    this.itemService.itemFilter.emit(event);
+  }
+
   ngOnInit() {
     this.storageService.watchStorage().subscribe((data) => {
       // if (data == "added" || data == "removed") {

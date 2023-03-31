@@ -1,5 +1,5 @@
 import { HttpClient } from "@angular/common/http";
-import { Injectable } from "@angular/core";
+import { EventEmitter, Injectable, Output } from "@angular/core";
 import { Observable } from "rxjs";
 import { Item } from "../models/item.model";
 
@@ -9,10 +9,24 @@ import { Item } from "../models/item.model";
 export class ItemService {
   baseUrl = "http://localhost:8080/api/items";
 
-  constructor(private httpClient: HttpClient) {}
+  @Output() itemFilter = new EventEmitter();
+  currentSearch: string;
+
+  constructor(private httpClient: HttpClient) {
+    this.itemFilter.subscribe((search) => {
+      this.currentSearch = search;
+    });
+  }
 
   getListItems(): Observable<Item[]> {
     return this.httpClient.get<Item[]>(`${this.baseUrl}`);
+  }
+
+  create(item: Item): Observable<Item> {
+    return this.httpClient.post<Item>(this.baseUrl, item);
+  }
+  update(item: Item): Observable<Item> {
+    return this.httpClient.put<Item>(this.baseUrl, item);
   }
 
   deleteItem(id: number) {

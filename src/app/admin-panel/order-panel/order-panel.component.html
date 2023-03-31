@@ -1,1 +1,50 @@
-<p>order-panel works!</p>
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th class="text-center" scope="col">#</th>
+      <th class="text-center" scope="col">Order Date</th>
+      <th class="text-center" scope="col">Items</th>
+      <th class="text-center" scope="col">Value</th>
+      <th class="text-center" scope="col">Status</th>
+      <th class="text-center" scope="col">Confirm</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr
+      *ngFor="
+        let orderRow of orders | filter : 'name' : searchValue : 'includes';
+        let i = index
+      "
+    >
+      <th class="text-center" scope="row">{{ orderRow.order.id }}</th>
+      <td class="text-center">{{ orderRow.order.orderDate }}</td>
+      <td class="text-left pl-3">
+        <p *ngFor="let detail of orderRow.order.orderDetails">
+          {{ detail.quantity }}x {{ detail.item.name }}
+        </p>
+      </td>
+      <!-- <td class="text-center">{{ orderRow.total.number }}</td> -->
+      <td class="text-right pr-3">{{ orderRow.total.value | number }}đ</td>
+      <td
+        class="text-center font-weight-bold"
+        [ngClass]="{
+          'text-success': orderRow.order.completed,
+          'text-warning': !orderRow.order.completed
+        }"
+      >
+        {{ orderRow.order.completed ? "Completed" : "Pending" }}
+      </td>
+      <td class="text-center">
+        <button
+          [hidden]="orderRow.order.completed"
+          (click)="onConfirm(orderRow.order.id, i)"
+          [ngClass]="{ 'btn-secondary': orderRow.order.completed }"
+          class="btn btn-primary"
+        >
+          <i class="bi bi-check-circle"></i>
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<div #modal></div>

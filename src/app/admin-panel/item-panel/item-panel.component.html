@@ -2,7 +2,20 @@
   <thead>
     <tr>
       <th class="text-center" scope="col">#</th>
-      <th class="text-center" scope="col-7">Name</th>
+      <th class="text-center" scope="col-7">
+        <!-- Name -->
+        <div class="form-inline input-group-prepend">
+          <label for="itemSearch">Name </label>
+          <input
+            class="form-control mr-sm-2"
+            type="text"
+            id="itemSearch"
+            placeholder="Search"
+            [(ngModel)]="searchValue"
+          />
+          <!-- <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button> -->
+        </div>
+      </th>
       <th class="text-center" scope="col-2">Price</th>
       <th class="text-center" scope="col-2">
         <button
@@ -16,12 +29,12 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let item of items">
+    <tr *ngFor="let item of items | filter : 'name' : searchValue : 'includes'">
       <th class="text-center" scope="row">{{ item.id }}</th>
       <td>{{ item.name }}</td>
       <td class="text-right">{{ item.price | number }} đ</td>
       <td class="text-center">
-        <button (click)="onEditt(item)" class="btn btn-outline-primary">
+        <button (click)="onEdit(item)" class="btn btn-outline-primary">
           <i class="bi bi-pencil-square"></i></button
         ><button (click)="onDelete(item)" class="btn btn-outline-danger">
           <i class="bi bi-trash3-fill"></i>
@@ -31,3 +44,67 @@
   </tbody>
 </table>
 <div #modal></div>
+
+<div id="addItemModal" class="modal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Add Item</h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+          tabindex="-1"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Please input item information.</p>
+        <form>
+          <!-- <div class="input-group"> -->
+          <div class="input-group-prepend">
+            <label class="input-group-text" for="nameInput">Name</label>
+            <input
+              tabindex="0"
+              id="nameInput"
+              #nameInput
+              class="form-control"
+              type="text"
+            />
+          </div>
+          <div class="input-group-prepend my-4">
+            <label class="input-group-text" for="priceInput">Price</label>
+            <input
+              tabindex="0"
+              id="priceInput"
+              #priceInput
+              class="form-control"
+              type="number"
+            />
+          </div>
+          <!-- </div> -->
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button
+          tabindex="-1"
+          type="button"
+          class="btn btn-secondary"
+          data-dismiss="modal"
+        >
+          Close
+        </button>
+        <button
+          (click)="onModalConfirm()"
+          tabindex="0"
+          type="button"
+          class="btn btn-primary"
+        >
+          Save
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
