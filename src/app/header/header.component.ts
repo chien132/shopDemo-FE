@@ -31,7 +31,7 @@ export class HeaderComponent implements OnInit {
   }
 
   onInput(event) {
-    this.itemService.itemFilter.emit(event);
+    this.itemService.itemFilter.emit(event.replace(/[^\w]/gi, ""));
   }
 
   ngOnInit() {

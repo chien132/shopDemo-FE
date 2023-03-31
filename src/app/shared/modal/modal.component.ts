@@ -14,11 +14,9 @@ export class ModalComponent {
   @Output() confirmEvent = new EventEmitter();
 
   closeMe() {
-    console.log("canceled!");
     this.closeMeEvent.emit();
   }
   confirm() {
-    console.log("confirmed!");
     this.confirmEvent.emit();
   }
 }

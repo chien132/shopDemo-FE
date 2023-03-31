@@ -10,7 +10,7 @@ export class ItemService {
   baseUrl = "http://localhost:8080/api/items";
 
   @Output() itemFilter = new EventEmitter();
-  currentSearch: string;
+  currentSearch: string = "";
 
   constructor(private httpClient: HttpClient) {
     this.itemFilter.subscribe((search) => {

@@ -17,7 +17,9 @@ export class ItemsComponent implements OnInit {
       (response) => {
         this.allItems = response;
         this.items = response.filter((item) =>
-          new RegExp(this.itemService.currentSearch, "i").test(item.name)
+          new RegExp(this.itemService.currentSearch, "i").test(
+            item.name.replace(/[^\w]/gi, "")
+          )
         );
       },
       (err) => {
@@ -26,9 +28,8 @@ export class ItemsComponent implements OnInit {
     );
 
     this.itemService.itemFilter.subscribe((search) => {
-      console.log(search);
       this.items = this.allItems.filter((item) =>
-        new RegExp(search, "i").test(item.name)
+        new RegExp(search, "i").test(item.name.replace(/[^\w]/gi, ""))
       );
     });
   }

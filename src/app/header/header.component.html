@@ -22,9 +22,15 @@
             [(ngModel)]="search"
             (ngModelChange)="onInput($event)"
           />
-          <!-- <button class="btn btn-outline-success my-2 my-sm-0" type="submit"> -->
-          <!-- Search -->
-          <!-- </button> -->
+          <div class="input-group-append">
+            <button
+              (click)="search = ''; onInput('')"
+              class="btn btn-default"
+              type="submit"
+            >
+              <i class="bi bi-backspace text-light"></i>
+            </button>
+          </div>
         </div>
         <!-- Item button -->
         <li *ngIf="role != 'ROLE_OWNER'" class="nav-item">
