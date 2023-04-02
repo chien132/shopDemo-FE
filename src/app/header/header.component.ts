@@ -15,6 +15,7 @@ export class HeaderComponent implements OnInit {
   username = this.jwtService.getUsername();
   role = this.jwtService.getRole();
   currentRoute: string;
+  searchTimer;
 
   constructor(
     private loginService: LoginService,
@@ -31,7 +32,12 @@ export class HeaderComponent implements OnInit {
   }
 
   onInput(event) {
-    this.itemService.itemFilter.emit(event.replace(/[^\w]/gi, ""));
+    clearTimeout(this.searchTimer);
+    this.searchTimer = setTimeout(() => {
+      const searchStr =
+        "%" + event.replace(/[^\w\s]/gi, "_").replace(/ /g, "%") + "%";
+      this.itemService.itemFilter.emit(searchStr);
+    }, 300);
   }
 
   ngOnInit() {

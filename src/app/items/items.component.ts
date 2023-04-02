@@ -1,4 +1,5 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnDestroy, OnInit } from "@angular/core";
+import { Subscription } from "rxjs";
 import { Item } from "../models/item.model";
 import { ItemService } from "../services/item.service";
 
@@ -7,29 +8,33 @@ import { ItemService } from "../services/item.service";
   templateUrl: "./items.component.html",
   styleUrls: ["./items.component.css"],
 })
-export class ItemsComponent implements OnInit {
-  allItems: Item[];
+export class ItemsComponent implements OnInit, OnDestroy {
   items: Item[];
+  sub: Subscription;
   constructor(private itemService: ItemService) {}
+  ngOnDestroy(): void {
+    if (this.sub) this.sub.unsubscribe();
+  }
 
   ngOnInit() {
-    this.itemService.getListItems().subscribe(
-      (response) => {
-        this.allItems = response;
-        this.items = response.filter((item) =>
-          new RegExp(this.itemService.currentSearch, "i").test(
-            item.name.replace(/[^\w]/gi, "")
-          )
-        );
-      },
-      (err) => {
-        console.log(err);
-      }
-    );
-
-    this.itemService.itemFilter.subscribe((search) => {
-      this.items = this.allItems.filter((item) =>
-        new RegExp(search, "i").test(item.name.replace(/[^\w]/gi, ""))
+    this.itemService
+      .getListItemsByNameLike(this.itemService.currentSearch)
+      .subscribe(
+        (res) => {
+          this.items = res;
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
+    this.sub = this.itemService.itemFilter.subscribe((searchStr) => {
+      this.itemService.getListItemsByNameLike(searchStr).subscribe(
+        (res) => {
+          this.items = res;
+        },
+        (err) => {
+          console.log(err);
+        }
       );
     });
   }

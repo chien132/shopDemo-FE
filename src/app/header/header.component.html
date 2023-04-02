@@ -20,7 +20,7 @@
             placeholder="Search"
             value=""
             [(ngModel)]="search"
-            (ngModelChange)="onInput($event)"
+            (keyup)="onInput(search)"
           />
           <div class="input-group-append">
             <button
