@@ -12,24 +12,24 @@ export class ItemService {
   @Output() itemFilter = new EventEmitter();
   currentSearch: string = "";
 
-  constructor(private httpClient: HttpClient) {
+  constructor(private http: HttpClient) {
     this.itemFilter.subscribe((search) => {
       this.currentSearch = search;
     });
   }
 
   getListItems(): Observable<Item[]> {
-    return this.httpClient.get<Item[]>(`${this.baseUrl}`);
+    return this.http.get<Item[]>(`${this.baseUrl}`);
   }
 
   create(item: Item): Observable<Item> {
-    return this.httpClient.post<Item>(this.baseUrl, item);
+    return this.http.post<Item>(this.baseUrl, item);
   }
   update(item: Item): Observable<Item> {
-    return this.httpClient.put<Item>(this.baseUrl, item);
+    return this.http.put<Item>(this.baseUrl, item);
   }
 
   deleteItem(id: number) {
-    return this.httpClient.delete(`${this.baseUrl}/${id}`);
+    return this.http.delete(`${this.baseUrl}/${id}`, { observe: "response" });
   }
 }

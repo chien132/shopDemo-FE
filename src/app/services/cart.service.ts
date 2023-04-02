@@ -15,16 +15,23 @@ export class CartService {
     return this.http.get<Cart>(`${this.baseUrl}/${this.jwtService.getId()}`);
   }
 
-  addItem(cart: CartReq): Observable<Cart> {
-    return this.http.post<Cart>(this.baseUrl, cart);
+  addItem(cartDetail: CartDetailReq): Observable<Cart> {
+    return this.http.post<Cart>(this.baseUrl, cartDetail);
+  }
+  updateItem(cartDetail: CartDetailUpdateReq) {
+    return this.http.put(this.baseUrl, cartDetail, { observe: "response" });
   }
   deleteItem(id: number) {
-    return this.http.delete(`${this.baseUrl}/${id}`);
+    return this.http.delete(`${this.baseUrl}/${id}`, { observe: "response" });
   }
 }
 
-export interface CartReq {
+export interface CartDetailReq {
   customerId: number;
   itemId: number;
+  quantity: number;
+}
+export interface CartDetailUpdateReq {
+  cartDetailId: number;
   quantity: number;
 }

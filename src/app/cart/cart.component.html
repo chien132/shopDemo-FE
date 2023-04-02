@@ -13,28 +13,38 @@
       </div>
       <div
         class="row border-top border-bottom"
-        *ngFor="let item of cart.cartDetails"
+        *ngFor="let cartDetail of cart.cartDetails; let i = index"
       >
         <div class="row main align-items-center">
           <div class="col-md-2">
             <img
               class="img-fluid"
-              src="https://images.stockx.com/images/NVIDIA-Founders-GeForce-RTX-4090-24G-Graphics-CardB-Graphics-Card-900-1G136-2530-000.jpg"
               src="https://bizweb.dktcdn.net/100/310/135/files/iphone-13-pink-select-2021.png"
             />
           </div>
           <div class="col-md-4">
             <!-- <div class="row text-muted">Type</div> -->
-            <div class="row">{{ item.item.name }}</div>
+            <div class="row">{{ cartDetail.item.name }}</div>
           </div>
           <div class="col-md-3 text-center">
-            <a (click)="onMinus(item.item.id)"><i class="bi bi-dash"></i></a>
-            <a class="border" style="cursor: default">{{ item.quantity }}</a>
-            <a (click)="onPlus(item.item.id)"><i class="bi bi-plus"></i></a>
+            <a (click)="onMinus(cartDetail.item.id)"
+              ><i class="bi bi-dash"></i
+            ></a>
+            <input
+              class="quantity"
+              type="number"
+              value="{{ cartDetail.quantity }}"
+              (focusout)="onQuantityFocusOut(i, cartDetail.id, $event)"
+            />
+            <a (click)="onPlus(cartDetail.item.id)"
+              ><i class="bi bi-plus"></i
+            ></a>
           </div>
           <div class="col-md-3 text-right">
-            {{ item.item.price * item.quantity | number }} đ
-            <a (click)="onDelete(item.id)"> <i class="bi bi-x close"></i></a>
+            {{ cartDetail.item.price * cartDetail.quantity | number }} đ
+            <a (click)="onDelete(i, cartDetail.id)">
+              <i class="bi bi-x close"></i
+            ></a>
           </div>
         </div>
       </div>

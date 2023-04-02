@@ -78,24 +78,36 @@ export class CartComponent implements OnInit {
       }),
       (err) => console.log(err);
   }
-  onDelete(id: number) {
+
+  onQuantityFocusOut(index, cartDetailId, event) {
+    event.target.value = event.target.value.replace(/[^0-9]/g, "");
+    let quantity: number = event.target.value;
+    this.cartService
+      .updateItem({
+        cartDetailId: cartDetailId,
+        quantity: quantity,
+      })
+      .subscribe((res) => {
+        if (res.status == 204) {
+          this.cart.cartDetails[index].quantity = quantity;
+          this.calculateTotal();
+        }
+      }),
+      (err) => console.log(err);
+  }
+
+  onDelete(index: number, id: number) {
     this.cartService.deleteItem(id).subscribe(
-      (res) => {},
+      (res) => {
+        if (res.status == 200) {
+          this.cart.cartDetails.splice(index, 1);
+          this.calculateTotal();
+        }
+      },
       (err) => {
         UtilService.sendMessage(err.error.message, false);
       }
-    ),
-      setTimeout(() => {
-        this.cartService.getCart().subscribe(
-          (res) => {
-            this.cart = res;
-            this.calculateTotal();
-          },
-          (err) => {
-            UtilService.sendMessage(err.error.message, false);
-          }
-        );
-      }, 50);
+    );
   }
 
   onCheckout() {

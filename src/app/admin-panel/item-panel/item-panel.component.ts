@@ -99,8 +99,10 @@ export class ItemPanelComponent implements OnInit {
         UtilService.hideModal("confirmModal");
         this.itemService.deleteItem(item.id).subscribe(
           (res) => {
-            UtilService.sendMessage(item.name + " has been deleted!", true);
-            this.items.splice(this.items.indexOf(item), 1);
+            if (res.status == 200) {
+              UtilService.sendMessage(item.name + " has been deleted!", true);
+              this.items.splice(this.items.indexOf(item), 1);
+            }
           },
           (err) => {
             UtilService.sendMessage(err.error.message, false);

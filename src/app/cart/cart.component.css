@@ -116,14 +116,20 @@ select {
   background-color: rgb(247, 247, 247);
 }
 
-#code {
-  background-image: linear-gradient(
-      to left,
-      rgba(255, 255, 255, 0.253),
-      rgba(255, 255, 255, 0.185)
-    ),
-    url("https://img.icons8.com/small/16/000000/long-arrow-right.png");
-  background-repeat: no-repeat;
-  background-position-x: 95%;
-  background-position-y: center;
+.quantity {
+  width: 50px;
+  height: 32px;
+  border: 0;
+  font-size: 16px;
+  font-weight: 400;
+  box-sizing: border-box;
+  text-align: center;
+  cursor: text;
+  border-radius: 0;
+  -webkit-appearance: none;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }

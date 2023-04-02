@@ -10,15 +10,12 @@ export class LoginService {
   baseUrl = "http://localhost:8080/api/";
 
   constructor(
-    private httpClient: HttpClient,
+    private http: HttpClient,
     private storageService: StorageService
   ) {}
 
   logIn(customer): Observable<{ token: string }> {
-    return this.httpClient.post<{ token: string }>(
-      `${this.baseUrl}login`,
-      customer
-    );
+    return this.http.post<{ token: string }>(`${this.baseUrl}login`, customer);
   }
 
   setToken(token: string) {
