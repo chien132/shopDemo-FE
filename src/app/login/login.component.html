@@ -1,7 +1,7 @@
 <div class="justify-content-center">
   <div class="card">
     <div class="card-header text-left">
-      <h3>Log In</h3>
+      <h3>{{ currentRoute | titlecase }}</h3>
     </div>
     <div class="card-body">
       <form>
@@ -15,7 +15,9 @@
             #usernameInput
             type="text"
             class="form-control"
-            placeholder="username"
+            id="username"
+            (keyup)="onKeyUp($event)"
+            placeholder="Username"
           />
         </div>
         <div class="input-group form-group">
@@ -26,25 +28,54 @@
           </div>
           <input
             #passwordInput
+            type="Password"
+            class="form-control"
+            id="password"
+            (keyup)="onKeyUp($event)"
+            placeholder="password"
+          />
+        </div>
+        <div
+          [ngClass]="{ 'd-none': currentRoute !== 'signup' }"
+          class="input-group form-group"
+        >
+          <div class="input-group-prepend">
+            <span class="input-group-text"
+              ><i class="bi bi-key-fill text-light"></i
+            ></span>
+          </div>
+          <input
+            #passwordConfirmInput
             type="password"
             class="form-control"
-            placeholder="password"
+            id="passwordConfirm"
+            (keyup)="onKeyUp($event)"
+            placeholder="Confirm password"
           />
         </div>
 
         <button
           type="button"
-          (click)="onLogin()"
+          id="loginbtn"
+          (click)="currentRoute == 'login' ? onLogin() : onSignup()"
           class="btn btn-primary float-right btn-block p-2 mt-4"
         >
-          Login
+          {{ currentRoute | titlecase }}
         </button>
       </form>
     </div>
     <div class="card-footer">
-      <div class="d-flex justify-content-center links">
-        Don't have an account?<a href="#">Sign Up</a>
+      <div
+        *ngIf="currentRoute == 'login'; else signup"
+        class="d-flex justify-content-center links"
+      >
+        Don't have an account?<a routerLink="/signup">Sign Up</a>
       </div>
+      <ng-template #signup>
+        <div class="d-flex justify-content-center links">
+          Already have an account?<a routerLink="/login">Log in</a>
+        </div>
+      </ng-template>
     </div>
   </div>
 </div>

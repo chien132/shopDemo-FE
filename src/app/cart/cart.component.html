@@ -33,7 +33,9 @@
             <input
               class="quantity"
               type="number"
+              min="1"
               value="{{ cartDetail.quantity }}"
+              (keyup)="onKeyUp($event)"
               (focusout)="onQuantityFocusOut(i, cartDetail.id, $event)"
             />
             <a (click)="onPlus(cartDetail.item.id)"

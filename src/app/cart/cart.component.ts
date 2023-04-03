@@ -78,9 +78,17 @@ export class CartComponent implements OnInit {
       }),
       (err) => console.log(err);
   }
-
+  onKeyUp(event) {
+    if (event.keyCode === 13) {
+      console.log(event);
+      event.target.blur();
+    }
+  }
   onQuantityFocusOut(index, cartDetailId, event) {
     event.target.value = event.target.value.replace(/[^0-9]/g, "");
+    if (event.target.value < 1) {
+      event.target.value = 1;
+    }
     let quantity: number = event.target.value;
     this.cartService
       .updateItem({

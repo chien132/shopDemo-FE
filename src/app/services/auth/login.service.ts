@@ -18,6 +18,13 @@ export class LoginService {
     return this.http.post<{ token: string }>(`${this.baseUrl}login`, customer);
   }
 
+  signUp(customer): Observable<{ message: string }> {
+    return this.http.post<{ message: string }>(
+      `${this.baseUrl}signup`,
+      customer
+    );
+  }
+
   setToken(token: string) {
     this.storageService.setItem("jwtToken", token);
   }

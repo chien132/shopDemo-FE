@@ -1,39 +1,71 @@
 import { HttpErrorResponse } from "@angular/common/http";
-import { Component, ElementRef, ViewChild } from "@angular/core";
-import { Router } from "@angular/router";
+import { Component, ElementRef, OnDestroy, ViewChild } from "@angular/core";
+import { NavigationEnd, Router } from "@angular/router";
 import { LoginService } from "../services/auth/login.service";
 import { JwtService } from "../services/jwt.service";
 import { UtilService } from "../services/util.service";
+import { filter } from "rxjs/operators";
+import { Subscription } from "rxjs";
 @Component({
   selector: "app-login",
   templateUrl: "./login.component.html",
   styleUrls: ["./login.component.css"],
 })
-export class LoginComponent {
+export class LoginComponent implements OnDestroy {
   @ViewChild("usernameInput", { static: true }) usernameRef: ElementRef;
   @ViewChild("passwordInput", { static: true }) passwordRef: ElementRef;
-
-  // authAccount: AuthModel;
-
-  customer: { username: string; password: string };
+  @ViewChild("passwordConfirmInput", { static: true })
+  passwordConfirmRef: ElementRef;
+  subRouterEvent: Subscription;
+  currentRoute: string;
   constructor(
     private loginService: LoginService,
     private router: Router,
     private jwtService: JwtService
-  ) {}
+  ) {
+    this.subRouterEvent = router.events
+      .pipe(filter((event) => event instanceof NavigationEnd))
+      .subscribe((event: NavigationEnd) => {
+        this.currentRoute = event.url.slice(1, event.url.length);
+      });
+  }
+
+  ngOnDestroy() {
+    if (this.subRouterEvent) this.subRouterEvent.unsubscribe();
+  }
+
+  onKeyUp(event) {
+    if (event.keyCode === 13) {
+      if (event.target.id === "username" && event.target.value.length > 0) {
+        document.getElementById("password").focus();
+      } else if (
+        event.target.id === "password" &&
+        event.target.value.length > 0
+      ) {
+        if (this.currentRoute === "login") {
+          document.getElementById("loginbtn").click();
+        } else {
+          document.getElementById("passwordConfirm").focus();
+        }
+      } else if (
+        event.target.id === "passwordConfirm" &&
+        event.target.value.length > 0
+      ) {
+        document.getElementById("loginbtn").click();
+      }
+    }
+  }
+
   onLogin() {
-    this.customer = {
+    let customer = {
       username: this.usernameRef.nativeElement.value,
       password: this.passwordRef.nativeElement.value,
     };
-    if (
-      this.customer.username.length == 0 ||
-      this.customer.password.length == 0
-    ) {
+    if (customer.username.length == 0 || customer.password.length == 0) {
       UtilService.sendMessage("Please input all information!", false);
       return;
     }
-    this.loginService.logIn(this.customer).subscribe(
+    this.loginService.logIn(customer).subscribe(
       (response) => {
         this.loginService.setToken(response.token);
         UtilService.sendMessage("You are now logged in", true);
@@ -54,7 +86,42 @@ export class LoginComponent {
             );
             break;
           default:
-            // UtilService.sendMessage(error.error.message, false);
+            UtilService.sendMessage("Cannot connect to the server!", false);
+            console.log(error);
+        }
+      }
+    );
+  }
+  onSignup() {
+    let customer = {
+      username: this.usernameRef.nativeElement.value,
+      password: this.passwordRef.nativeElement.value,
+      role: true,
+    };
+    let passwordConfirm = this.passwordConfirmRef.nativeElement.value;
+
+    if (customer.username.length == 0 || customer.password.length == 0) {
+      UtilService.sendMessage("Please input all information!", false);
+      return;
+    } else if (passwordConfirm.length == 0) {
+      UtilService.sendMessage("Please confirm your password!", false);
+      return;
+    } else if (passwordConfirm !== customer.password) {
+      UtilService.sendMessage("Password confirm does not match!", false);
+      return;
+    }
+
+    this.loginService.signUp(customer).subscribe(
+      (response) => {
+        UtilService.sendMessage(response.message, true);
+        this.router.navigate(["/login"]);
+      },
+      (error: HttpErrorResponse) => {
+        switch (error.status) {
+          case 400:
+            UtilService.sendMessage(error.error.message, false);
+            break;
+          default:
             UtilService.sendMessage("Cannot connect to the server!", false);
             console.log(error);
         }
