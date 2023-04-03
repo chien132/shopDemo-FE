@@ -2,7 +2,7 @@ import { HttpErrorResponse } from "@angular/common/http";
 import { Component, ElementRef, OnDestroy, ViewChild } from "@angular/core";
 import { NavigationEnd, Router } from "@angular/router";
 import { LoginService } from "../services/auth/login.service";
-import { JwtService } from "../services/jwt.service";
+import { JwtService } from "../services/auth/jwt.service";
 import { UtilService } from "../services/util.service";
 import { filter } from "rxjs/operators";
 import { Subscription } from "rxjs";
@@ -70,7 +70,7 @@ export class LoginComponent implements OnDestroy {
         this.loginService.setToken(response.token);
         UtilService.sendMessage("You are now logged in", true);
         if (this.jwtService.getRole() === "ROLE_OWNER") {
-          this.router.navigate(["/adminpanel"]);
+          this.router.navigate(["/adminpanel/item"]);
         } else {
           this.router.navigate(["/items"]);
         }

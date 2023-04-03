@@ -2,7 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { EventEmitter, Injectable, Output } from "@angular/core";
 import { Observable } from "rxjs";
 import { Order } from "../models/order.model";
-import { JwtService } from "./jwt.service";
+import { JwtService } from "./auth/jwt.service";
 
 @Injectable({
   providedIn: "root",

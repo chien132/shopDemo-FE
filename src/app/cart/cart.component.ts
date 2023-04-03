@@ -2,7 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Cart } from "../models/cart.model";
 import { CartService } from "../services/cart.service";
-import { JwtService } from "../services/jwt.service";
+import { JwtService } from "../services/auth/jwt.service";
 import { OrderService } from "../services/order.service";
 import { UtilService } from "../services/util.service";
 

@@ -7,41 +7,43 @@ import {
 } from "@angular/router";
 import { Observable } from "rxjs";
 import { LoginService } from "./login.service";
-import { JwtService } from "../jwt.service";
-import { StorageService } from "./storage.service";
+import { JwtService } from "./jwt.service";
+import { UtilService } from "../util.service";
 
 @Injectable({
   providedIn: "root",
 })
 export class AuthorizeGuard implements CanActivate {
-  constructor(
-    private loginService: LoginService,
-    private storageService: StorageService,
-    private jwtService: JwtService,
-    private router: Router
-  ) {}
+  constructor(private jwtService: JwtService, private router: Router) {}
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<boolean> | Promise<boolean> | boolean {
-    if (this.jwtService.getId()) {
-      if (this.jwtService.isTokenExpired()) {
-        // Should Redirect Sig-In Page
-        this.router.navigate(["/login"]);
-      } else {
-        return true;
-      }
+    const role = this.jwtService.getRole();
+    if (!role) {
+      this.router.navigate(["/login"]);
+      UtilService.sendMessage(
+        "You dont have permission to access this page!",
+        false
+      );
+      return false;
     } else {
-      return new Promise((resolve) => {
-        //   this.loginService
-        //     .signIncallBack()
-        //     .then((e) => {
-        //       resolve(true);
-        //     })
-        //     .catch((e) => {
-        //       // Should Redirect Sign-In Page
-        //     });
-      });
+      if (this.jwtService.isTokenExpired()) {
+        this.router.navigate(["/login"]);
+        UtilService.sendMessage(
+          "Your session has expired, please login again!",
+          false
+        );
+        return false;
+      } else if (next.data.roles && next.data.roles.indexOf(role) === -1) {
+        UtilService.sendMessage(
+          "You dont have permission to access this page!",
+          false
+        );
+        this.router.navigate([""]);
+        return false;
+      }
+      return true;
     }
   }
 }

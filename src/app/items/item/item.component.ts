@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { CartService } from "src/app/services/cart.service";
-import { JwtService } from "src/app/services/jwt.service";
+import { JwtService } from "src/app/services/auth/jwt.service";
 import { UtilService } from "src/app/services/util.service";
 
 @Component({

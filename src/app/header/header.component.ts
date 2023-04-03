@@ -2,7 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { NavigationEnd, Router } from "@angular/router";
 import { StorageService } from "../services/auth/storage.service";
 import { LoginService } from "../services/auth/login.service";
-import { JwtService } from "../services/jwt.service";
+import { JwtService } from "../services/auth/jwt.service";
 import { filter } from "rxjs/operators";
 import { ItemService } from "../services/item.service";
 

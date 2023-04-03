@@ -8,6 +8,7 @@ import { ItemsComponent } from "./items/items.component";
 import { LoginComponent } from "./login/login.component";
 import { OrderListComponent } from "./order-list/order-list.component";
 import { CartResolver } from "./services/cart.resolver";
+import { AuthorizeGuard } from "./services/auth/authorize-guard.service";
 
 const routes: Routes = [
   {
@@ -21,7 +22,8 @@ const routes: Routes = [
   {
     path: "adminpanel",
     component: null,
-    canActivate: [],
+    canActivate: [AuthorizeGuard],
+    data: { roles: ["ROLE_OWNER"] },
     children: [
       {
         path: "item",
@@ -40,15 +42,24 @@ const routes: Routes = [
   {
     path: "cart",
     component: CartComponent,
+    canActivate: [AuthorizeGuard],
+    data: { roles: ["ROLE_CUSTOMER"] },
     resolve: { cart: CartResolver },
   },
   {
     path: "orders",
+    canActivate: [AuthorizeGuard],
+    data: { roles: ["ROLE_CUSTOMER"] },
     component: OrderListComponent,
   },
   {
     path: "not-found",
     component: ErrorPageComponent,
+  },
+  {
+    path: "",
+    redirectTo: "/items",
+    pathMatch: "full",
   },
   {
     path: "**",
