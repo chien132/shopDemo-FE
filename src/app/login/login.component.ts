@@ -33,7 +33,24 @@ export class LoginComponent implements OnDestroy {
   ngOnDestroy() {
     if (this.subRouterEvent) this.subRouterEvent.unsubscribe();
   }
-
+  valid() {
+    let username = this.usernameRef.nativeElement.value;
+    let password = this.passwordRef.nativeElement.value;
+    if (username.length == 0 || password.length == 0) {
+      UtilService.sendMessage("Please input all information!", false);
+      return false;
+    }
+    if (
+      username.includes('"') ||
+      username.includes("'") ||
+      password.includes('"') ||
+      password.includes("'")
+    ) {
+      UtilService.sendMessage(`"  and  '  are not allow here!!!`, false);
+      return false;
+    }
+    return true;
+  }
   onKeyUp(event) {
     if (event.keyCode === 13) {
       if (event.target.id === "username" && event.target.value.length > 0) {
@@ -57,14 +74,13 @@ export class LoginComponent implements OnDestroy {
   }
 
   onLogin() {
+    if (!this.valid()) {
+      return;
+    }
     let customer = {
       username: this.usernameRef.nativeElement.value,
       password: this.passwordRef.nativeElement.value,
     };
-    if (customer.username.length == 0 || customer.password.length == 0) {
-      UtilService.sendMessage("Please input all information!", false);
-      return;
-    }
     this.loginService.logIn(customer).subscribe(
       (response) => {
         this.loginService.setToken(response.token);
@@ -93,6 +109,9 @@ export class LoginComponent implements OnDestroy {
     );
   }
   onSignup() {
+    if (!this.valid()) {
+      return;
+    }
     let customer = {
       username: this.usernameRef.nativeElement.value,
       password: this.passwordRef.nativeElement.value,
@@ -100,10 +119,7 @@ export class LoginComponent implements OnDestroy {
     };
     let passwordConfirm = this.passwordConfirmRef.nativeElement.value;
 
-    if (customer.username.length == 0 || customer.password.length == 0) {
-      UtilService.sendMessage("Please input all information!", false);
-      return;
-    } else if (passwordConfirm.length == 0) {
+    if (passwordConfirm.length == 0) {
       UtilService.sendMessage("Please confirm your password!", false);
       return;
     } else if (passwordConfirm !== customer.password) {

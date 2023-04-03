@@ -23,7 +23,7 @@ table.table.table-bordered {
 
 td .btn {
   padding: 0;
-  margin: 0 2px;
+  margin: 0 1vw;
   min-width: 3vw;
   height: 4vh;
 }

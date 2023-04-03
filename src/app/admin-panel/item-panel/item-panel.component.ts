@@ -31,6 +31,10 @@ export class ItemPanelComponent implements OnInit {
   sub!: Subscription;
 
   ngOnInit() {
+    this.onRefresh();
+  }
+
+  onRefresh() {
     this.itemService.getListItems().subscribe(
       (res) => {
         this.items = res;
@@ -40,11 +44,25 @@ export class ItemPanelComponent implements OnInit {
       }
     );
   }
+  valid() {
+    if (this.nameInputRef.nativeElement.value.length === 0) {
+      UtilService.sendMessage("Name must not empty!", false);
+      return false;
+    }
+    this.priceInputRef.nativeElement.value =
+      this.priceInputRef.nativeElement.value.replace(/[^0-9]/g, "");
+    if (this.priceInputRef.nativeElement.value < 0) {
+      UtilService.sendMessage("Price must be greater than 0!", false);
+      return false;
+    }
+    return true;
+  }
+
   onAdd() {
     const modal = $(`#addItemModal`).modal("show");
     modal.find(".modal-title").html("Add item ");
     this.nameInputRef.nativeElement.value = "";
-    this.priceInputRef.nativeElement.value = "";
+    this.priceInputRef.nativeElement.value = "0";
     this.currentItem = null;
   }
 
@@ -57,6 +75,9 @@ export class ItemPanelComponent implements OnInit {
   }
 
   onModalConfirm() {
+    if (!this.valid()) {
+      return;
+    }
     if (!this.currentItem) {
       const newItem: Item = {
         id: 0,

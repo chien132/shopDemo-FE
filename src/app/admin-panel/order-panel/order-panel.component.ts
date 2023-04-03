@@ -22,14 +22,15 @@ export class OrderPanelComponent implements OnInit {
   sub!: Subscription;
 
   ngOnInit() {
+    this.onRefresh();
+  }
+
+  onRefresh() {
     this.orderService.getAllOrders().subscribe(
       (res) => {
         this.orders = res.map((e) => {
           return { order: e, total: this.orderService.getTotal(e) };
         });
-        // for (let i = 0; i < res.length; i++) {
-        // this.value.push(this.orderService.getTotal(res[i]));
-        // }
       },
       (err) => {
         console.log(err);

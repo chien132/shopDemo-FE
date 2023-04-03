@@ -6,7 +6,15 @@
       <th class="text-center" scope="col">Items</th>
       <th class="text-center" scope="col">Value</th>
       <th class="text-center" scope="col">Status</th>
-      <th class="text-center" scope="col">Confirm</th>
+      <th class="text-center" scope="col">
+        <button
+          class="btn btn-primary"
+          style="right: 1vw; top: 10vh"
+          (click)="onRefresh()"
+        >
+          Refresh
+        </button>
+      </th>
     </tr>
   </thead>
   <tbody>
@@ -35,13 +43,17 @@
         {{ orderRow.order.completed ? "Completed" : "Pending" }}
       </td>
       <td class="text-center">
+        <i
+          *ngIf="orderRow.order.completed"
+          class="bi bi-check-circle-fill text-success"
+        ></i>
         <button
           [hidden]="orderRow.order.completed"
           (click)="onConfirm(orderRow.order.id, i)"
           [ngClass]="{ 'btn-secondary': orderRow.order.completed }"
-          class="btn btn-primary"
+          class="btn btn-success px-2"
         >
-          <i class="bi bi-check-circle"></i>
+          Complete Order
         </button>
       </td>
     </tr>
