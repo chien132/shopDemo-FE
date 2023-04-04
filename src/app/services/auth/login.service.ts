@@ -1,13 +1,13 @@
-import { Injectable } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
-import { Observable } from "rxjs";
-import { StorageService } from "./storage.service";
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { StorageService } from './storage.service';
 
 @Injectable({
-  providedIn: "root",
+  providedIn: 'root',
 })
 export class LoginService {
-  baseUrl = "http://localhost:8080/api/";
+  baseUrl = 'http://localhost:8080/api/';
 
   constructor(
     private http: HttpClient,
@@ -26,10 +26,10 @@ export class LoginService {
   }
 
   setToken(token: string) {
-    this.storageService.setItem("jwtToken", token);
+    this.storageService.setItem('jwtToken', token);
   }
 
   logOut() {
-    this.storageService.removeItem("jwtToken");
+    this.storageService.removeItem('jwtToken');
   }
 }

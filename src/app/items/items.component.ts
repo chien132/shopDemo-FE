@@ -1,12 +1,12 @@
-import { Component, OnDestroy, OnInit } from "@angular/core";
-import { Subscription } from "rxjs";
-import { Item } from "../models/item.model";
-import { ItemService } from "../services/item.service";
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { Item } from '../models/item.model';
+import { ItemService } from '../services/item.service';
 
 @Component({
-  selector: "app-items",
-  templateUrl: "./items.component.html",
-  styleUrls: ["./items.component.css"],
+  selector: 'app-items',
+  templateUrl: './items.component.html',
+  styleUrls: ['./items.component.css'],
 })
 export class ItemsComponent implements OnInit, OnDestroy {
   items: Item[];

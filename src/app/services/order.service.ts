@@ -1,14 +1,14 @@
-import { HttpClient } from "@angular/common/http";
-import { EventEmitter, Injectable, Output } from "@angular/core";
-import { Observable } from "rxjs";
-import { Order } from "../models/order.model";
-import { JwtService } from "./auth/jwt.service";
+import { HttpClient } from '@angular/common/http';
+import { EventEmitter, Injectable, Output } from '@angular/core';
+import { Observable } from 'rxjs';
+import { Order } from '../models/order.model';
+import { JwtService } from './auth/jwt.service';
 
 @Injectable({
-  providedIn: "root",
+  providedIn: 'root',
 })
 export class OrderService {
-  baseUrl = "http://localhost:8080/api/orders";
+  baseUrl = 'http://localhost:8080/api/orders';
   @Output() selectOrder = new EventEmitter<Order>();
 
   getTotal(order: Order): { number: number; value: number } {

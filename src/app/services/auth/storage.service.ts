@@ -1,8 +1,8 @@
-import { Injectable } from "@angular/core";
-import { Observable, Subject } from "rxjs";
+import { Injectable } from '@angular/core';
+import { Observable, Subject } from 'rxjs';
 
 @Injectable({
-  providedIn: "root",
+  providedIn: 'root',
 })
 export class StorageService {
   private storageSub = new Subject<string>();
@@ -18,11 +18,11 @@ export class StorageService {
 
   setItem(key: string, data: any) {
     localStorage.setItem(key, data);
-    this.storageSub.next("added");
+    this.storageSub.next('added');
   }
 
   removeItem(key) {
     localStorage.removeItem(key);
-    this.storageSub.next("removed");
+    this.storageSub.next('removed');
   }
 }

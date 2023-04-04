@@ -1,26 +1,17 @@
-import { Injectable } from "@angular/core";
-import jwt_decode from "jwt-decode";
-import { StorageService } from "./storage.service";
-import { BehaviorSubject, Observable } from "rxjs";
+import { Injectable } from '@angular/core';
+import jwt_decode from 'jwt-decode';
+import { StorageService } from './storage.service';
 
 @Injectable({
-  providedIn: "root",
+  providedIn: 'root',
 })
 export class JwtService {
-  jwtToken = this.storageService.getItem("jwtToken");
+  jwtToken = this.storageService.getItem('jwtToken');
   decodedToken: { [key: string]: string };
-  currentRoleSubject: BehaviorSubject<string>;
-  currentRole: Observable<string>;
 
   constructor(private storageService: StorageService) {
     this.storageService.watchStorage().subscribe((data) => {
-      // if (data == "added" || data == "removed") {
-      this.jwtToken = this.storageService.getItem("jwtToken");
-      // console.log(this.jwtToken);
-      // }
-
-      this.currentRoleSubject = new BehaviorSubject<string>(this.getRole());
-      this.currentRole = this.currentRoleSubject.asObservable();
+      this.jwtToken = this.storageService.getItem('jwtToken');
     });
   }
 

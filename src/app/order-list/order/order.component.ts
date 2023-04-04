@@ -1,15 +1,15 @@
-import { Component, Input, OnInit } from "@angular/core";
-import { Order } from "src/app/models/order.model";
-import { OrderService } from "src/app/services/order.service";
+import { Component, Input, OnInit } from '@angular/core';
+import { Order } from 'src/app/models/order.model';
+import { OrderService } from 'src/app/services/order.service';
 
 @Component({
-  selector: "app-order",
-  templateUrl: "./order.component.html",
-  styleUrls: ["./order.component.css"],
+  selector: 'app-order',
+  templateUrl: './order.component.html',
+  styleUrls: ['./order.component.css'],
 })
 export class OrderComponent implements OnInit {
-  @Input("order") order: Order;
-  @Input("total") total: { number: number; value: number };
+  @Input('order') order: Order;
+  @Input('total') total: { number: number; value: number };
 
   constructor(private orderService: OrderService) {}
 

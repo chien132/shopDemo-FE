@@ -1,14 +1,14 @@
-import { Component, OnInit, ViewChild, ViewContainerRef } from "@angular/core";
-import { Subscription } from "rxjs";
-import { Order } from "src/app/models/order.model";
-import { OrderService } from "src/app/services/order.service";
-import { UtilService } from "src/app/services/util.service";
-import { ModalService } from "src/app/shared/modal.service";
-declare var $: any;
+import { Component, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { Order } from 'src/app/models/order.model';
+import { OrderService } from 'src/app/services/order.service';
+import { UtilService } from 'src/app/services/util.service';
+import { ModalService } from 'src/app/shared/modal.service';
+declare const $: any;
 @Component({
-  selector: "app-order-panel",
-  templateUrl: "./order-panel.component.html",
-  styleUrls: ["./order-panel.component.css"],
+  selector: 'app-order-panel',
+  templateUrl: './order-panel.component.html',
+  styleUrls: ['./order-panel.component.css'],
 })
 export class OrderPanelComponent implements OnInit {
   orders: { order: Order; total: { number: number; value: number } }[];
@@ -17,7 +17,7 @@ export class OrderPanelComponent implements OnInit {
     private modalService: ModalService
   ) {}
 
-  @ViewChild("modal", { read: ViewContainerRef, static: true })
+  @ViewChild('modal', { read: ViewContainerRef, static: true })
   entry!: ViewContainerRef;
   sub!: Subscription;
 
@@ -42,14 +42,14 @@ export class OrderPanelComponent implements OnInit {
     this.sub = this.modalService
       .openModal(
         this.entry,
-        "Complete Order",
+        'Complete Order',
         `Do you want to complete this order ?`
       )
       .subscribe((v) => {
-        UtilService.hideModal("confirmModal");
+        UtilService.hideModal('confirmModal');
         this.orderService.completeOrder(id).subscribe(
           (res) => {
-            UtilService.sendMessage("Completed order !", true);
+            UtilService.sendMessage('Completed order !', true);
             this.orders[index].order = res;
           },
           (err) => {

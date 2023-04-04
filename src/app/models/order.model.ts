@@ -1,5 +1,5 @@
-import { Customer } from "./customer.model";
-import { OrderDetail } from "./order-detail.model";
+import { Customer } from './customer.model';
+import { OrderDetail } from './order-detail.model';
 
 export class Order {
   id: number;

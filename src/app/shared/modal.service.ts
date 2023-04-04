@@ -3,12 +3,12 @@ import {
   ComponentRef,
   Injectable,
   ViewContainerRef,
-} from "@angular/core";
-import { Subject } from "rxjs";
-import { ModalComponent } from "./modal/modal.component";
+} from '@angular/core';
+import { Subject } from 'rxjs';
+import { ModalComponent } from './modal/modal.component';
 
 @Injectable({
-  providedIn: "root",
+  providedIn: 'root',
 })
 export class ModalService {
   private componentRef!: ComponentRef<ModalComponent>;
@@ -32,7 +32,7 @@ export class ModalService {
   }
 
   confirm() {
-    this.componentSubscriber.next("confirm");
+    this.componentSubscriber.next('confirm');
     this.closeModal();
   }
 }

@@ -1,15 +1,15 @@
-import { Component, OnInit } from "@angular/core";
-import { ActivatedRoute, Router } from "@angular/router";
-import { Cart } from "../models/cart.model";
-import { CartService } from "../services/cart.service";
-import { JwtService } from "../services/auth/jwt.service";
-import { OrderService } from "../services/order.service";
-import { UtilService } from "../services/util.service";
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Cart } from '../models/cart.model';
+import { CartService } from '../services/cart.service';
+import { JwtService } from '../services/auth/jwt.service';
+import { OrderService } from '../services/order.service';
+import { UtilService } from '../services/util.service';
 
 @Component({
-  selector: "app-cart",
-  templateUrl: "./cart.component.html",
-  styleUrls: ["./cart.component.css"],
+  selector: 'app-cart',
+  templateUrl: './cart.component.html',
+  styleUrls: ['./cart.component.css'],
 })
 export class CartComponent implements OnInit {
   cart: Cart;
@@ -58,11 +58,13 @@ export class CartComponent implements OnInit {
         itemId: itemId,
         quantity: 1,
       })
-      .subscribe((res) => {
-        this.cart = res;
-        this.calculateTotal();
-      }),
-      (err) => console.log(err);
+      .subscribe(
+        (res) => {
+          this.cart = res;
+          this.calculateTotal();
+        },
+        (err) => console.log(err)
+      );
   }
 
   onMinus(itemId: number) {
@@ -72,11 +74,13 @@ export class CartComponent implements OnInit {
         itemId: itemId,
         quantity: -1,
       })
-      .subscribe((res) => {
-        this.cart = res;
-        this.calculateTotal();
-      }),
-      (err) => console.log(err);
+      .subscribe(
+        (res) => {
+          this.cart = res;
+          this.calculateTotal();
+        },
+        (err) => console.log(err)
+      );
   }
   onKeyUp(event) {
     if (event.keyCode === 13) {
@@ -85,7 +89,7 @@ export class CartComponent implements OnInit {
     }
   }
   onQuantityFocusOut(index, cartDetailId, event) {
-    event.target.value = event.target.value.replace(/[^0-9]/g, "");
+    event.target.value = event.target.value.replace(/[^0-9]/g, '');
     if (event.target.value < 1) {
       event.target.value = 1;
     }
@@ -95,13 +99,15 @@ export class CartComponent implements OnInit {
         cartDetailId: cartDetailId,
         quantity: quantity,
       })
-      .subscribe((res) => {
-        if (res.status == 204) {
-          this.cart.cartDetails[index].quantity = quantity;
-          this.calculateTotal();
-        }
-      }),
-      (err) => console.log(err);
+      .subscribe(
+        (res) => {
+          if (res.status == 204) {
+            this.cart.cartDetails[index].quantity = quantity;
+            this.calculateTotal();
+          }
+        },
+        (err) => console.log(err)
+      );
   }
 
   onDelete(index: number, id: number) {
@@ -121,9 +127,9 @@ export class CartComponent implements OnInit {
   onCheckout() {
     this.orderService.confirmOrder(this.customerId).subscribe(
       (res) => {
-        UtilService.sendMessage("Your order has been confirmed!", true);
-        this.router.navigate(["/orders"]);
-        UtilService.hideModal("confirmOrderModal");
+        UtilService.sendMessage('Your order has been confirmed!', true);
+        this.router.navigate(['/orders']);
+        UtilService.hideModal('confirmOrderModal');
       },
       (err) => {
         UtilService.sendMessage(err.error.message, false);

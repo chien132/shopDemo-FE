@@ -1,16 +1,16 @@
-import { HttpClient } from "@angular/common/http";
-import { EventEmitter, Injectable, Output } from "@angular/core";
-import { Observable } from "rxjs";
-import { Item } from "../models/item.model";
+import { HttpClient } from '@angular/common/http';
+import { EventEmitter, Injectable, Output } from '@angular/core';
+import { Observable } from 'rxjs';
+import { Item } from '../models/item.model';
 
 @Injectable({
-  providedIn: "root",
+  providedIn: 'root',
 })
 export class ItemService {
-  baseUrl = "http://localhost:8080/api/items";
+  baseUrl = 'http://localhost:8080/api/items';
 
   @Output() itemFilter = new EventEmitter();
-  currentSearch: string = "%";
+  currentSearch: string = '%';
 
   constructor(private http: HttpClient) {
     this.itemFilter.subscribe((search) => {
@@ -36,6 +36,6 @@ export class ItemService {
   }
 
   deleteItem(id: number) {
-    return this.http.delete(`${this.baseUrl}/${id}`, { observe: "response" });
+    return this.http.delete(`${this.baseUrl}/${id}`, { observe: 'response' });
   }
 }

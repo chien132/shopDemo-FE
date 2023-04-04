@@ -3,10 +3,10 @@ import {
   HttpHandler,
   HttpInterceptor,
   HttpRequest,
-} from "@angular/common/http";
-import { Injectable } from "@angular/core";
+} from '@angular/common/http';
+import { Injectable } from '@angular/core';
 
-import { Observable } from "rxjs";
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
@@ -14,12 +14,12 @@ export class AuthInterceptor implements HttpInterceptor {
     req: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    const accessToken: string = localStorage.getItem("jwtToken");
+    const accessToken: string = localStorage.getItem('jwtToken');
     // set global application headers.
     req = req.clone({
       setHeaders: {
-        "Content-Type": "application/json; charset=utf-8",
-        Accept: "application/json",
+        'Content-Type': 'application/json; charset=utf-8',
+        Accept: 'application/json',
         // Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
       },
     });
@@ -27,7 +27,7 @@ export class AuthInterceptor implements HttpInterceptor {
     // Set headers for requests that require authorization.
     if (accessToken) {
       const authenticatedRequest = req.clone({
-        headers: req.headers.set("Authorization", `Bearer ${accessToken}`),
+        headers: req.headers.set('Authorization', `Bearer ${accessToken}`),
       });
       // Request with authorization headers
       return next.handle(authenticatedRequest);
@@ -35,7 +35,5 @@ export class AuthInterceptor implements HttpInterceptor {
       // Request without authorization header
       return next.handle(req);
     }
-
-    // return next.handle(req);
   }
 }

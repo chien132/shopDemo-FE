@@ -1,7 +1,7 @@
-import { Pipe, PipeTransform } from "@angular/core";
+import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: "filter",
+  name: 'filter',
 })
 export class FilterPipe implements PipeTransform {
   transform(arr: any[], prop: string, value: string, method: Method): any {
@@ -18,14 +18,14 @@ export class FilterPipe implements PipeTransform {
 
   filter(source: string, target: string, method: Method): boolean {
     switch (method) {
-      case "includes":
-        return new RegExp(target, "i").test(source);
-      case "equal":
+      case 'includes':
+        return new RegExp(target, 'i').test(source);
+      case 'equal':
         return source == target;
-      case "not-equal":
+      case 'not-equal':
         return source != target;
     }
   }
 }
 
-type Method = "includes" | "equal" | "not-equal";
+type Method = 'includes' | 'equal' | 'not-equal';

@@ -31,7 +31,6 @@
           {{ detail.quantity }}x {{ detail.item.name }}
         </p>
       </td>
-      <!-- <td class="text-center">{{ orderRow.total.number }}</td> -->
       <td class="text-right pr-3">{{ orderRow.total.value | number }}đ</td>
       <td
         class="text-center font-weight-bold"
@@ -40,7 +39,7 @@
           'text-warning': !orderRow.order.completed
         }"
       >
-        {{ orderRow.order.completed ? "Completed" : "Pending" }}
+        {{ orderRow.order.completed ? 'Completed' : 'Pending' }}
       </td>
       <td class="text-center">
         <i

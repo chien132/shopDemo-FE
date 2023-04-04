@@ -1,14 +1,14 @@
-import { HttpClient } from "@angular/common/http";
-import { Injectable } from "@angular/core";
-import { Observable } from "rxjs";
-import { Cart } from "../models/cart.model";
-import { JwtService } from "./auth/jwt.service";
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { Cart } from '../models/cart.model';
+import { JwtService } from './auth/jwt.service';
 
 @Injectable({
-  providedIn: "root",
+  providedIn: 'root',
 })
 export class CartService {
-  baseUrl = "http://localhost:8080/api/carts";
+  baseUrl = 'http://localhost:8080/api/carts';
   constructor(private http: HttpClient, private jwtService: JwtService) {}
 
   getCart(): Observable<Cart> {
@@ -19,10 +19,10 @@ export class CartService {
     return this.http.post<Cart>(this.baseUrl, cartDetail);
   }
   updateItem(cartDetail: CartDetailUpdateReq) {
-    return this.http.put(this.baseUrl, cartDetail, { observe: "response" });
+    return this.http.put(this.baseUrl, cartDetail, { observe: 'response' });
   }
   deleteItem(id: number) {
-    return this.http.delete(`${this.baseUrl}/${id}`, { observe: "response" });
+    return this.http.delete(`${this.baseUrl}/${id}`, { observe: 'response' });
   }
 }
 
