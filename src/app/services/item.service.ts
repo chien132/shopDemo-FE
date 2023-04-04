@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
-import { EventEmitter, Injectable, Output } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Injectable } from '@angular/core';
+import { Observable, Subject } from 'rxjs';
 import { Item } from '../models/item.model';
 
 @Injectable({
@@ -9,7 +9,7 @@ import { Item } from '../models/item.model';
 export class ItemService {
   baseUrl = 'http://localhost:8080/api/items';
 
-  @Output() itemFilter = new EventEmitter();
+  itemFilter = new Subject<string>();
   currentSearch: string = '%';
 
   constructor(private http: HttpClient) {

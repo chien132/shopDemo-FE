@@ -29,6 +29,6 @@ export class OrderListComponent implements OnInit {
 
   onChoose(o: Order) {
     this.selectedOrder = o;
-    this.orderService.selectOrder.emit(o);
+    this.orderService.selectOrder.next(o);
   }
 }

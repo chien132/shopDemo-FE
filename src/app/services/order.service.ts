@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
-import { EventEmitter, Injectable, Output } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Injectable } from '@angular/core';
+import { Observable, Subject } from 'rxjs';
 import { Order } from '../models/order.model';
 import { JwtService } from './auth/jwt.service';
 
@@ -9,7 +9,7 @@ import { JwtService } from './auth/jwt.service';
 })
 export class OrderService {
   baseUrl = 'http://localhost:8080/api/orders';
-  @Output() selectOrder = new EventEmitter<Order>();
+  selectOrder = new Subject<Order>();
 
   getTotal(order: Order): { number: number; value: number } {
     let number = 0,

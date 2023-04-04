@@ -2,7 +2,9 @@
   <div class="title">
     <div class="row">
       <div class="col">
-        <h6>{{ order.orderDate }} | Value: {{ total.value | number }} đ</h6>
+        <h6>
+          {{ order.orderDate | date }} | Value: {{ total.value | number }} đ
+        </h6>
       </div>
       <div class="col align-self-center text-right text-muted">
         {{ total.number }} items

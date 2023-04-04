@@ -36,7 +36,7 @@ export class HeaderComponent implements OnInit {
     this.searchTimer = setTimeout(() => {
       const searchStr =
         '%' + event.replace(/[^\w\s]/gi, '_').replace(/ /g, '%') + '%';
-      this.itemService.itemFilter.emit(searchStr);
+      this.itemService.itemFilter.next(searchStr);
     }, 300);
   }
 
