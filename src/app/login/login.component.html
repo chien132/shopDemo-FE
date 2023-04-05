@@ -4,7 +4,7 @@
       <h3>{{ currentRoute | titlecase }}</h3>
     </div>
     <div class="card-body">
-      <form>
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
         <div class="input-group form-group">
           <div class="input-group-prepend">
             <span class="input-group-text">
@@ -13,12 +13,26 @@
           </div>
           <input
             #usernameInput
+            formControlName="username"
             type="text"
             class="form-control"
-            id="username"
-            (keyup)="onKeyUp($event)"
+            [ngClass]="{ 'is-invalid': submitted && f['username'].errors }"
             placeholder="Username"
           />
+          <div
+            *ngIf="submitted && f['username'].errors"
+            class="invalid-feedback"
+          >
+            <div *ngIf="f['username'].errors['required']">
+              Username is required
+            </div>
+            <div *ngIf="f['username'].errors['minlength']">
+              Username must be at least 3 characters
+            </div>
+            <div *ngIf="f['username'].errors['maxlength']">
+              Username must not exceed 20 characters
+            </div>
+          </div>
         </div>
         <div class="input-group form-group">
           <div class="input-group-prepend">
@@ -29,11 +43,25 @@
           <input
             #passwordInput
             type="Password"
+            formControlName="password"
             class="form-control"
-            id="password"
-            (keyup)="onKeyUp($event)"
-            placeholder="password"
+            [ngClass]="{ 'is-invalid': submitted && f['password'].errors }"
+            placeholder="Password"
           />
+          <div
+            *ngIf="submitted && f['password'].errors"
+            class="invalid-feedback"
+          >
+            <div *ngIf="f['password'].errors['required']">
+              Password is required
+            </div>
+            <div *ngIf="f['password'].errors['minlength']">
+              Password must be at least 3 characters
+            </div>
+            <div *ngIf="f['password'].errors['maxlength']">
+              Username must not exceed 40 characters
+            </div>
+          </div>
         </div>
         <div
           [ngClass]="{ 'd-none': currentRoute !== 'signup' }"
@@ -45,23 +73,42 @@
             ></span>
           </div>
           <input
-            #passwordConfirmInput
             type="password"
+            formControlName="confirmPassword"
             class="form-control"
-            id="passwordConfirm"
-            (keyup)="onKeyUp($event)"
+            [ngClass]="{
+              'is-invalid': submitted && f['confirmPassword'].errors
+            }"
             placeholder="Confirm password"
           />
+          <div
+            *ngIf="submitted && f['confirmPassword'].errors"
+            class="invalid-feedback"
+          >
+            <div *ngIf="f['confirmPassword'].errors['required']">
+              Confirm Password is required
+            </div>
+            <div *ngIf="f['confirmPassword'].errors['!isMatching']">
+              Confirm Password does not match
+            </div>
+          </div>
         </div>
-
-        <button
-          type="button"
-          id="loginbtn"
-          (click)="currentRoute == 'login' ? onLogin() : onSignup()"
-          class="btn btn-primary float-right btn-block p-2 mt-4"
-        >
-          {{ currentRoute | titlecase }}
-        </button>
+        <div class="form-group">
+          <button
+            type="submit"
+            id="loginbtn"
+            class="btn btn-primary float-right btn-block p-2 mt-4"
+          >
+            {{ currentRoute | titlecase }}
+          </button>
+          <!-- <button
+            type="button"
+            (click)="onReset()"
+            class="btn btn-warning float-right"
+          >
+            Reset
+          </button> -->
+        </div>
       </form>
     </div>
     <div class="card-footer">

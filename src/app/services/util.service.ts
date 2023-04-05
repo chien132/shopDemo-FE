@@ -1,6 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { EMPTY, throwError } from 'rxjs';
+import { AbstractControl, ValidationErrors } from '@angular/forms';
+import { EMPTY } from 'rxjs';
 declare const $: any;
 
 @Injectable({
@@ -32,5 +33,16 @@ export class UtilService {
     }
     console.log(error);
     return EMPTY;
+  }
+  static matchValues(
+    matchTo: string
+  ): (AbstractControl) => ValidationErrors | null {
+    return (control: AbstractControl): ValidationErrors | null => {
+      return !!control.parent &&
+        !!control.parent.value &&
+        control.value === control.parent.controls[matchTo].value
+        ? null
+        : { isMatching: false };
+    };
   }
 }

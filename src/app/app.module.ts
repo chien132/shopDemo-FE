@@ -17,7 +17,7 @@ import { ItemPanelComponent } from './admin-panel/item-panel/item-panel.componen
 import { OrderPanelComponent } from './admin-panel/order-panel/order-panel.component';
 import { ModalComponent } from './shared/modal/modal.component';
 import { FilterPipe } from './shared/filter.pipe';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -35,7 +35,13 @@ import { FormsModule } from '@angular/forms';
     ModalComponent,
     FilterPipe,
   ],
-  imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
+  ],
   entryComponents: [ModalComponent],
   providers: [
     {
