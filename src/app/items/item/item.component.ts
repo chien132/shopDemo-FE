@@ -33,21 +33,7 @@ export class ItemComponent implements OnInit {
       quantity: 1,
     };
 
-    this.cartService.addItem(itemReq).subscribe(
-      (res) => {
-        UtilService.sendMessage(
-          'Added ' +
-            itemReq.quantity +
-            ' ' +
-            res.cartDetails.find((detail) => detail.item.id == itemReq.itemId)
-              .item.name +
-            ' to cart!',
-          true
-        );
-      },
-      (err) => {
-        UtilService.sendMessage(err.error.message, false);
-      }
-    );
+    this.cartService.addItem(itemReq);
+    UtilService.sendMessage('Added 1 ' + this.item.name + ' to cart!', true);
   }
 }

@@ -2,6 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { Item } from '../models/item.model';
+import { catchError } from 'rxjs/operators';
+import { UtilService } from './util.service';
 
 @Injectable({
   providedIn: 'root',
@@ -19,13 +21,23 @@ export class ItemService {
   }
 
   getListItems(): Observable<Item[]> {
-    return this.http.get<Item[]>(`${this.baseUrl}`);
+    return this.http.get<Item[]>(`${this.baseUrl}`).pipe(
+      catchError((error) => {
+        return UtilService.errorHandler(error);
+      })
+    );
   }
 
   getListItemsByNameLike(search: string): Observable<Item[]> {
-    return this.http.get<Item[]>(`${this.baseUrl}/search`, {
-      params: { search: search },
-    });
+    return this.http
+      .get<Item[]>(`${this.baseUrl}/search`, {
+        params: { search: search },
+      })
+      .pipe(
+        catchError((error) => {
+          return UtilService.errorHandler(error);
+        })
+      );
   }
 
   create(item: Item): Observable<Item> {
@@ -36,6 +48,12 @@ export class ItemService {
   }
 
   deleteItem(id: number) {
-    return this.http.delete(`${this.baseUrl}/${id}`, { observe: 'response' });
+    return this.http
+      .delete(`${this.baseUrl}/${id}`, { observe: 'response' })
+      .pipe(
+        catchError((error) => {
+          return UtilService.errorHandler(error);
+        })
+      );
   }
 }

@@ -26,16 +26,11 @@ export class OrderPanelComponent implements OnInit {
   }
 
   onRefresh() {
-    this.orderService.getAllOrders().subscribe(
-      (res) => {
-        this.orders = res.map((e) => {
-          return { order: e, total: this.orderService.getTotal(e) };
-        });
-      },
-      (err) => {
-        console.log(err);
-      }
-    );
+    this.orderService.getAllOrders().subscribe((res) => {
+      this.orders = res.map((e) => {
+        return { order: e, total: this.orderService.getTotal(e) };
+      });
+    });
   }
 
   onConfirm(id: number, index: number) {
@@ -47,16 +42,10 @@ export class OrderPanelComponent implements OnInit {
       )
       .subscribe((v) => {
         UtilService.hideModal('confirmModal');
-        this.orderService.completeOrder(id).subscribe(
-          (res) => {
-            UtilService.sendMessage('Completed order !', true);
-            this.orders[index].order = res;
-          },
-          (err) => {
-            UtilService.sendMessage(err.error.message, false);
-            console.log(err);
-          }
-        );
+        this.orderService.completeOrder(id).subscribe((res) => {
+          UtilService.sendMessage('Completed order !', true);
+          this.orders[index].order = res;
+        });
       });
   }
 

@@ -1,7 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { StorageService } from './storage.service';
+import { catchError } from 'rxjs/operators';
+import { UtilService } from '../util.service';
+import { Router } from '@angular/router';
+import { JwtService } from './jwt.service';
 
 @Injectable({
   providedIn: 'root',
@@ -11,18 +14,43 @@ export class LoginService {
 
   constructor(
     private http: HttpClient,
-    private storageService: StorageService
+    private storageService: StorageService,
+    private jwtService: JwtService,
+    private router: Router
   ) {}
 
-  logIn(customer): Observable<{ token: string }> {
-    return this.http.post<{ token: string }>(`${this.baseUrl}login`, customer);
+  logIn(customer) {
+    this.http
+      .post<{ token: string }>(`${this.baseUrl}login`, customer)
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          return UtilService.errorHandler(error);
+        })
+      )
+      .subscribe((response) => {
+        this.setToken(response.token);
+        UtilService.sendMessage('You are now logged in', true);
+        if (this.jwtService.getRole() === 'ROLE_OWNER') {
+          this.router.navigate(['/adminpanel/item']);
+        } else {
+          this.router.navigate(['/items']);
+        }
+        console.log(this.jwtService.getDecodeToken());
+      });
   }
 
-  signUp(customer): Observable<{ message: string }> {
-    return this.http.post<{ message: string }>(
-      `${this.baseUrl}signup`,
-      customer
-    );
+  signUp(customer) {
+    this.http
+      .post<{ message: string }>(`${this.baseUrl}signup`, customer)
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          return UtilService.errorHandler(error);
+        })
+      )
+      .subscribe((response) => {
+        UtilService.sendMessage(response.message, true);
+        this.router.navigate(['/login']);
+      });
   }
 
   setToken(token: string) {

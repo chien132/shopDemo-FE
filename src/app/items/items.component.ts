@@ -19,23 +19,13 @@ export class ItemsComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.itemService
       .getListItemsByNameLike(this.itemService.currentSearch)
-      .subscribe(
-        (res) => {
-          this.items = res;
-        },
-        (err) => {
-          console.log(err);
-        }
-      );
+      .subscribe((res) => {
+        this.items = res;
+      });
     this.sub = this.itemService.itemFilter.subscribe((searchStr) => {
-      this.itemService.getListItemsByNameLike(searchStr).subscribe(
-        (res) => {
-          this.items = res;
-        },
-        (err) => {
-          console.log(err);
-        }
-      );
+      this.itemService.getListItemsByNameLike(searchStr).subscribe((res) => {
+        this.items = res;
+      });
     });
   }
 }

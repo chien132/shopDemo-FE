@@ -85,6 +85,7 @@
               tabindex="0"
               id="priceInput"
               #priceInput
+              (keydown)="onPriceInput($event)"
               min="0"
               class="form-control"
               type="number"
@@ -102,7 +103,6 @@
           Close
         </button>
         <button
-          [disabled]="nameInput.value.length < 1 || priceInput.value < 0"
           (click)="onModalConfirm()"
           tabindex="0"
           type="button"

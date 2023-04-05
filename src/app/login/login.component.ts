@@ -1,8 +1,6 @@
-import { HttpErrorResponse } from '@angular/common/http';
 import { Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { LoginService } from '../services/auth/login.service';
-import { JwtService } from '../services/auth/jwt.service';
 import { UtilService } from '../services/util.service';
 import { filter } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
@@ -18,11 +16,7 @@ export class LoginComponent implements OnDestroy {
   passwordConfirmRef: ElementRef;
   subRouterEvent: Subscription;
   currentRoute: string;
-  constructor(
-    private loginService: LoginService,
-    private router: Router,
-    private jwtService: JwtService
-  ) {
+  constructor(private loginService: LoginService, private router: Router) {
     this.subRouterEvent = router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe((event: NavigationEnd) => {
@@ -81,32 +75,7 @@ export class LoginComponent implements OnDestroy {
       username: this.usernameRef.nativeElement.value,
       password: this.passwordRef.nativeElement.value,
     };
-    this.loginService.logIn(customer).subscribe(
-      (response) => {
-        this.loginService.setToken(response.token);
-        UtilService.sendMessage('You are now logged in', true);
-        if (this.jwtService.getRole() === 'ROLE_OWNER') {
-          this.router.navigate(['/adminpanel/item']);
-        } else {
-          this.router.navigate(['/items']);
-        }
-        console.log(this.jwtService.getDecodeToken());
-      },
-      (error: HttpErrorResponse) => {
-        switch (error.status) {
-          case 400:
-          case 401:
-            UtilService.sendMessage(
-              'Username or password is incorrect!',
-              false
-            );
-            break;
-          default:
-            UtilService.sendMessage('Cannot connect to the server!', false);
-            console.log(error);
-        }
-      }
-    );
+    this.loginService.logIn(customer);
   }
   onSignup() {
     if (!this.valid()) {
@@ -127,21 +96,6 @@ export class LoginComponent implements OnDestroy {
       return;
     }
 
-    this.loginService.signUp(customer).subscribe(
-      (response) => {
-        UtilService.sendMessage(response.message, true);
-        this.router.navigate(['/login']);
-      },
-      (error: HttpErrorResponse) => {
-        switch (error.status) {
-          case 400:
-            UtilService.sendMessage(error.error.message, false);
-            break;
-          default:
-            UtilService.sendMessage('Cannot connect to the server!', false);
-            console.log(error);
-        }
-      }
-    );
+    this.loginService.signUp(customer);
   }
 }

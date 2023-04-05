@@ -39,25 +39,28 @@ export class ItemPanelComponent implements OnInit, OnDestroy {
   }
 
   onRefresh() {
-    this.itemService.getListItems().subscribe(
-      (res) => {
-        this.items = res;
-      },
-      (err) => {
-        console.log(err);
-      }
-    );
+    this.itemService.getListItems().subscribe((res) => {
+      this.items = res;
+    });
+  }
+
+  onPriceInput(event) {
+    if (event.which != 8 && isNaN(event.key)) {
+      event.preventDefault();
+    }
   }
 
   valid() {
     if (this.nameInputRef.nativeElement.value.length === 0) {
       UtilService.sendMessage('Name must not empty!', false);
+      this.nameInputRef.nativeElement.focus();
       return false;
     }
     this.priceInputRef.nativeElement.value =
       this.priceInputRef.nativeElement.value.replace(/[^0-9]/g, '');
     if (this.priceInputRef.nativeElement.value < 0) {
       UtilService.sendMessage('Price must be greater than 0!', false);
+      this.priceInputRef.nativeElement.focus();
       return false;
     }
     return true;
@@ -95,7 +98,7 @@ export class ItemPanelComponent implements OnInit, OnDestroy {
           this.items.push(res);
         },
         (err) => {
-          UtilService.sendMessage(err.error.message, false);
+          UtilService.errorHandler(err);
         }
       );
     } else {
@@ -106,7 +109,7 @@ export class ItemPanelComponent implements OnInit, OnDestroy {
           UtilService.sendMessage(`Updated item ${res.id}: ${res.name}`, true);
         },
         (err) => {
-          UtilService.sendMessage(err.error.message, false);
+          UtilService.errorHandler(err);
         }
       );
     }
@@ -123,18 +126,12 @@ export class ItemPanelComponent implements OnInit, OnDestroy {
       )
       .subscribe((v) => {
         UtilService.hideModal('confirmModal');
-        this.itemService.deleteItem(item.id).subscribe(
-          (res) => {
-            if (res.status == 200) {
-              UtilService.sendMessage(item.name + ' has been deleted!', true);
-              this.items.splice(this.items.indexOf(item), 1);
-            }
-          },
-          (err) => {
-            UtilService.sendMessage(err.error.message, false);
-            console.log(err);
+        this.itemService.deleteItem(item.id).subscribe((res) => {
+          if (res.status == 200) {
+            UtilService.sendMessage(item.name + ' has been deleted!', true);
+            this.items.splice(this.items.indexOf(item), 1);
           }
-        );
+        });
       });
   }
 

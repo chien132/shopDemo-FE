@@ -1,38 +1,54 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Cart } from '../models/cart.model';
 import { CartService } from '../services/cart.service';
 import { JwtService } from '../services/auth/jwt.service';
 import { OrderService } from '../services/order.service';
-import { UtilService } from '../services/util.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-cart',
   templateUrl: './cart.component.html',
   styleUrls: ['./cart.component.css'],
 })
-export class CartComponent implements OnInit {
+export class CartComponent implements OnInit, OnDestroy {
   cart: Cart;
   total: number;
   totalItem: number;
-  customerId = -1;
+  customerId: number = -1;
+  watcher: Subscription;
 
   constructor(
     private cartService: CartService,
     private orderService: OrderService,
     private route: ActivatedRoute,
-    private router: Router,
     private jwtService: JwtService
   ) {}
 
-  calculateTotal() {
-    if (this.cart.cartDetails.length > 0) {
-      this.total = this.cart.cartDetails
+  ngOnInit() {
+    this.route.data.subscribe(({ cart }) => {
+      this.updateCart(cart);
+    });
+    this.watcher = this.cartService.cartWatcher.subscribe((cart) => {
+      this.updateCart(cart);
+    });
+    this.customerId = +this.jwtService.getId();
+  }
+
+  ngOnDestroy() {
+    this.watcher.unsubscribe();
+  }
+
+  updateCart(cart) {
+    this.cart = cart;
+
+    if (cart.cartDetails.length > 0) {
+      this.total = cart.cartDetails
         .map((a) => a.quantity * a.item.price)
         .reduce(function (a, b) {
           return a + b;
         });
-      this.totalItem = this.cart.cartDetails
+      this.totalItem = cart.cartDetails
         .map((a) => a.quantity)
         .reduce(function (a, b) {
           return a + b;
@@ -43,48 +59,23 @@ export class CartComponent implements OnInit {
     }
   }
 
-  ngOnInit() {
-    this.route.data.subscribe(({ cart }) => {
-      this.cart = cart;
-      this.calculateTotal();
-    });
-    this.customerId = +this.jwtService.getId();
-  }
-
   onPlus(itemId: number) {
-    this.cartService
-      .addItem({
-        customerId: +this.jwtService.getId(),
-        itemId: itemId,
-        quantity: 1,
-      })
-      .subscribe(
-        (res) => {
-          this.cart = res;
-          this.calculateTotal();
-        },
-        (err) => console.log(err)
-      );
+    this.cartService.addItem({
+      customerId: +this.jwtService.getId(),
+      itemId: itemId,
+      quantity: 1,
+    });
   }
 
   onMinus(itemId: number) {
-    this.cartService
-      .addItem({
-        customerId: +this.jwtService.getId(),
-        itemId: itemId,
-        quantity: -1,
-      })
-      .subscribe(
-        (res) => {
-          this.cart = res;
-          this.calculateTotal();
-        },
-        (err) => console.log(err)
-      );
+    this.cartService.addItem({
+      customerId: +this.jwtService.getId(),
+      itemId: itemId,
+      quantity: -1,
+    });
   }
   onKeyUp(event) {
     if (event.keyCode === 13) {
-      console.log(event);
       event.target.blur();
     }
   }
@@ -94,46 +85,21 @@ export class CartComponent implements OnInit {
       event.target.value = 1;
     }
     let quantity: number = event.target.value;
-    this.cartService
-      .updateItem({
+    this.cartService.updateItem(
+      index,
+      {
         cartDetailId: cartDetailId,
         quantity: quantity,
-      })
-      .subscribe(
-        (res) => {
-          if (res.status == 204) {
-            this.cart.cartDetails[index].quantity = quantity;
-            this.calculateTotal();
-          }
-        },
-        (err) => console.log(err)
-      );
+      },
+      this.cart
+    );
   }
 
   onDelete(index: number, id: number) {
-    this.cartService.deleteItem(id).subscribe(
-      (res) => {
-        if (res.status == 200) {
-          this.cart.cartDetails.splice(index, 1);
-          this.calculateTotal();
-        }
-      },
-      (err) => {
-        UtilService.sendMessage(err.error.message, false);
-      }
-    );
+    this.cartService.deleteItem(index, id, this.cart);
   }
 
   onCheckout() {
-    this.orderService.confirmOrder(this.customerId).subscribe(
-      (res) => {
-        UtilService.sendMessage('Your order has been confirmed!', true);
-        this.router.navigate(['/orders']);
-        UtilService.hideModal('confirmOrderModal');
-      },
-      (err) => {
-        UtilService.sendMessage(err.error.message, false);
-      }
-    );
+    this.orderService.confirmOrder(this.customerId);
   }
 }
