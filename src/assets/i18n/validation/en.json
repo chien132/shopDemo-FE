@@ -1,0 +1,10 @@
+{
+  "UsernameRequired": "Username is required",
+  "UsernameMinValid": "Username must be at least 3 characters",
+  "UsernameMaxValid": "Username must not exceed 20 characters",
+  "PasswordRequired": "Password is required",
+  "PasswordMinValid": "Password must be at least 3 characters",
+  "PasswordMaxValid": "Password must not exceed 40 characters",
+  "ConfirmPassRequired": "Confirm Password is required",
+  "ConfirmPassNotMatch": "Confirm Password does not match"
+}

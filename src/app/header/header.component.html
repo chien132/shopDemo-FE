@@ -17,7 +17,7 @@
         <div *ngIf="currentRoute == '/items'" class="form-inline my-2 my-lg-0">
           <input
             class="form-control mr-sm-2"
-            placeholder="Search"
+            placeholder="{{ 'Search' | translate }}"
             value=""
             [(ngModel)]="search"
             (keyup)="onInput(search)"
@@ -38,21 +38,22 @@
             class="nav-link"
             routerLinkActive="active"
             [routerLink]="['/items']"
-            ><i class="bi bi-archive"></i> Items
+            ><i class="bi bi-archive"></i> {{ 'Items' | translate }}
           </a>
         </li>
 
         <!-- Cart button -->
         <li *ngIf="role === 'ROLE_CUSTOMER'" class="nav-item">
           <a class="nav-link" routerLink="/cart" routerLinkActive="active"
-            ><i class="bi bi-cart"></i> Cart</a
+            ><i class="bi bi-cart"></i> {{ 'Header.Cart' | translate }}</a
           >
         </li>
 
         <!-- Order history -->
         <li *ngIf="role === 'ROLE_CUSTOMER'" class="nav-item">
           <a class="nav-link" routerLink="/orders" routerLinkActive="active"
-            ><i class="bi bi-card-checklist"></i> Order history</a
+            ><i class="bi bi-card-checklist"></i>
+            {{ 'Header.OrderHistory' | translate }}</a
           >
         </li>
 
@@ -62,7 +63,7 @@
             class="nav-link"
             routerLinkActive="active"
             [routerLink]="['/login']"
-            >Login</a
+            >{{ 'Login' | translate }}</a
           >
         </li>
         <!-- Admin item panel -->
@@ -71,7 +72,8 @@
             class="nav-link"
             routerLink="/adminpanel/item"
             routerLinkActive="active"
-            ><i class="bi bi-database-fill-gear"></i> Item Panel</a
+            ><i class="bi bi-database-fill-gear"></i>
+            {{ 'Header.ItemPanel' | translate }}</a
           >
         </li>
         <!-- Admin order panel -->
@@ -80,7 +82,8 @@
             class="nav-link"
             routerLink="/adminpanel/order"
             routerLinkActive="active"
-            ><i class="bi bi-clipboard-data-fill"></i> Order Panel</a
+            ><i class="bi bi-clipboard-data-fill"></i>
+            {{ 'Header.OrderPanel' | translate }}</a
           >
         </li>
         <!-- Account dropdown -->
@@ -96,10 +99,26 @@
             <!-- Logout button -->
             <li class="dropdown-item text-danger">
               <a (click)="logOut()">
-                <i class="bi bi-box-arrow-left"></i> LogOut
+                <i class="bi bi-box-arrow-left"></i> {{ 'Logout' | translate }}
               </a>
             </li>
           </ul>
+        </li>
+        <!-- Select language -->
+        <li class="nav-item dropdown">
+          <select
+            class="custom-select"
+            #langSelect
+            (change)="changeLang(langSelect.value)"
+          >
+            <option
+              *ngFor="let lang of translate.getLangs()"
+              [value]="lang"
+              [selected]="lang === translate.currentLang"
+            >
+              {{ lang }}
+            </option>
+          </select>
         </li>
       </ul>
     </div>
@@ -122,7 +141,9 @@
   >
     <div class="toast-header bg-success text-light">
       <i class="rounded mr-2 bi bi-bell-fill"></i>
-      <strong id="toastHeader" class="mr-auto">Success</strong>
+      <strong id="toastHeader" class="mr-auto">{{
+        'Success' | translate
+      }}</strong>
       <button
         type="button"
         class="ml-2 mb-1 close"

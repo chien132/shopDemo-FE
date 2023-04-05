@@ -5,6 +5,7 @@ import { LoginService } from '../services/auth/login.service';
 import { JwtService } from '../services/auth/jwt.service';
 import { filter } from 'rxjs/operators';
 import { ItemService } from '../services/item.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-header',
@@ -18,6 +19,7 @@ export class HeaderComponent implements OnInit {
   searchTimer;
 
   constructor(
+    private translate: TranslateService,
     private loginService: LoginService,
     private router: Router,
     private storageService: StorageService,
@@ -29,6 +31,10 @@ export class HeaderComponent implements OnInit {
       .subscribe((event: NavigationEnd) => {
         this.currentRoute = event.url;
       });
+  }
+  changeLang(language: string) {
+    localStorage.setItem('locale', language);
+    this.translate.use(language);
   }
 
   onInput(event) {

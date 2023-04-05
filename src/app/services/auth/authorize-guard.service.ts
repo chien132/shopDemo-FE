@@ -20,23 +20,23 @@ export class AuthorizeGuard implements CanActivate {
   ): Observable<boolean> | Promise<boolean> | boolean {
     const role = this.jwtService.getRole();
     if (!role) {
-      this.router.navigate(['/login']);
       UtilService.sendMessage(
-        'You dont have permission to access this page!',
+        UtilService.translation.instant('AuthRequired'),
         false
       );
+      this.router.navigate(['/login']);
       return false;
     } else {
       if (this.jwtService.isTokenExpired()) {
         this.router.navigate(['/login']);
         UtilService.sendMessage(
-          'Your session has expired, please login again!',
+          UtilService.translation.instant('SessionExpired'),
           false
         );
         return false;
       } else if (next.data.roles && next.data.roles.indexOf(role) === -1) {
         UtilService.sendMessage(
-          'You dont have permission to access this page!',
+          UtilService.translation.instant('AuthRequired'),
           false
         );
         this.router.navigate(['']);

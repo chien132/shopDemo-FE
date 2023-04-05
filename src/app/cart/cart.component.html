@@ -4,10 +4,12 @@
       <div class="title">
         <div class="row">
           <div class="col">
-            <h4><b>Shopping Cart</b></h4>
+            <h4>
+              <b>{{ 'Cart.ShoppingCart' | translate }}</b>
+            </h4>
           </div>
           <div class="col align-self-center text-right text-muted">
-            {{ totalItem }} items
+            {{ totalItem }} {{ 'Items' | translate | lowercase }}
           </div>
         </div>
       </div>
@@ -54,23 +56,29 @@
       <div class="back-to-shop">
         <a routerLink="/items"
           ><i class="bi bi-arrow-return-left"></i>
-          <span class="text-muted"> Back to shop</span>
+          <span class="text-muted"> {{ 'Cart.BackToShop' | translate }}</span>
         </a>
       </div>
     </div>
     <div class="col-md-4 summary">
       <div>
-        <h5><b>Summary</b></h5>
+        <h5>
+          <b>{{ 'Cart.Summary' | translate }}</b>
+        </h5>
       </div>
       <hr />
       <div class="row">
-        <div class="col" style="padding-left: 0">ITEMS: {{ totalItem }}</div>
+        <div class="col" style="padding-left: 0">
+          {{ 'Items' | translate | uppercase }}: {{ totalItem }}
+        </div>
         <div class="col text-right">{{ total | number }} đ</div>
       </div>
       <form>
         <div class="form-group mb-3">
           <select class="select">
-            <option selected value="1">Standard-Delivery (Free)</option>
+            <option selected value="1">
+              {{ 'Cart.StandardDelivery' | translate }}
+            </option>
           </select>
         </div>
       </form>
@@ -78,7 +86,7 @@
         class="row"
         style="border-top: 1px solid rgba(0, 0, 0, 0.1); padding: 2vh 0"
       >
-        <div class="col">TOTAL PRICE</div>
+        <div class="col">{{ 'Cart.TotalPrice' | translate }}</div>
         <div class="col text-right">{{ total | number }} đ</div>
       </div>
       <button
@@ -87,7 +95,7 @@
         data-target="#confirmOrderModal"
         [disabled]="cart.cartDetails.length < 1"
       >
-        CHECKOUT
+        {{ 'Cart.Checkout' | translate | uppercase }}
       </button>
     </div>
   </div>
@@ -104,7 +112,9 @@
   <div class="modal-dialog modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="confirmModalLabel">Confirm Order</h5>
+        <h5 class="modal-title" id="confirmModalLabel">
+          {{ 'Cart.Confirm' | translate }}
+        </h5>
         <button
           type="button"
           class="close"
@@ -114,13 +124,13 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body">Are you sure to confirm this order?</div>
+      <div class="modal-body">{{ 'Cart.ConfirmMsg' | translate }}</div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">
-          No, take me back
+          {{ 'Cart.Cancel' | translate }}
         </button>
         <button type="button" class="btn btn-success" (click)="onCheckout()">
-          Confirm order
+          {{ 'Cart.Confirm' | translate }}
         </button>
       </div>
     </div>

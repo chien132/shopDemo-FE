@@ -8,7 +8,9 @@
             alt="Item image"
           />
         </a>
-        <a (click)="addToCart()" class="add-to-cart">Add to Cart</a>
+        <a (click)="addToCart()" class="add-to-cart">{{
+          'Item.AddToCart' | translate
+        }}</a>
       </div>
       <div class="product-content">
         <h3 class="title">

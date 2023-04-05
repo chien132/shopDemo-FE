@@ -80,12 +80,14 @@ export class LoginComponent implements OnInit, OnDestroy {
         Validators.required,
         UtilService.matchValues('password'),
       ]);
-      console.log('LOGIN');
     } else {
       this.form.controls.confirmPassword.clearValidators();
       this.form.controls.confirmPassword.updateValueAndValidity();
-      console.log('SIGNUP');
     }
+  }
+
+  ngOnDestroy() {
+    if (this.subRouterEvent) this.subRouterEvent.unsubscribe();
   }
 
   get f(): { [key: string]: AbstractControl } {
@@ -97,6 +99,9 @@ export class LoginComponent implements OnInit, OnDestroy {
     if (this.form.invalid) {
       return;
     }
+    if (!this.valid()) {
+      return;
+    }
     this.currentRoute === 'login' ? this.onLogin() : this.onSignup();
   }
 
@@ -105,28 +110,20 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.form.reset();
   }
 
-  ngOnDestroy() {
-    if (this.subRouterEvent) this.subRouterEvent.unsubscribe();
+  valid() {
+    let username = this.usernameRef.nativeElement.value;
+    let password = this.passwordRef.nativeElement.value;
+    if (username.includes('"') || username.includes("'")) {
+      this.usernameRef.nativeElement.focus();
+      UtilService.sendMessage(`"  and  '  are not allow here!!!`, false);
+      return false;
+    } else if (password.includes('"') || password.includes("'")) {
+      this.passwordRef.nativeElement.focus();
+      UtilService.sendMessage(`"  and  '  are not allow here!!!`, false);
+      return false;
+    }
+    return true;
   }
-
-  // valid() {
-  //   let username = this.usernameRef.nativeElement.value;
-  //   let password = this.passwordRef.nativeElement.value;
-  //   if (username.length == 0 || password.length == 0) {
-  //     UtilService.sendMessage('Please input all information!', false);
-  //     return false;
-  //   }
-  //   if (
-  //     username.includes('"') ||
-  //     username.includes("'") ||
-  //     password.includes('"') ||
-  //     password.includes("'")
-  //   ) {
-  //     UtilService.sendMessage(`"  and  '  are not allow here!!!`, false);
-  //     return false;
-  //   }
-  //   return true;
-  // }
 
   onLogin() {
     let customer = {

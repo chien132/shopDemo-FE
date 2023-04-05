@@ -1,6 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AbstractControl, ValidationErrors } from '@angular/forms';
+import { TranslateService } from '@ngx-translate/core';
 import { EMPTY } from 'rxjs';
 declare const $: any;
 
@@ -8,14 +9,24 @@ declare const $: any;
   providedIn: 'root',
 })
 export class UtilService {
+  static translation: TranslateService;
+  static setTranslationService(translation: TranslateService) {
+    UtilService.translation = translation;
+  }
   static sendMessage(message: string, success: boolean) {
     if (!success) {
       $('body').find('.toast-header').first().addClass('bg-danger');
-      $('body').find('#toastHeader').first().html('Failed');
+      $('body')
+        .find('#toastHeader')
+        .first()
+        .html(this.translation.instant('Failed'));
     } else {
       $('body').find('.toast-header').first().removeClass('bg-danger');
       $('body').find('.toast-header').first().addClass('bg-success');
-      $('body').find('#toastHeader').first().html('Success');
+      $('body')
+        .find('#toastHeader')
+        .first()
+        .html(this.translation.instant('Success'));
     }
     $('body').find('#toastMessage').first().html(message);
     $('body').find('#liveToast').first().toast('show');
@@ -27,9 +38,12 @@ export class UtilService {
 
   static errorHandler(error: HttpErrorResponse) {
     if (error.status === 0) {
-      this.sendMessage('Cannot connect to the server!', false);
+      this.sendMessage(UtilService.translation.instant('CantConnect'), false);
     } else {
-      this.sendMessage(error.error.message, false);
+      this.sendMessage(
+        UtilService.translation.instant(error.error.message),
+        false
+      );
     }
     console.log(error);
     return EMPTY;

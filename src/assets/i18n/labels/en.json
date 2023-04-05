@@ -1,0 +1,56 @@
+{
+  "Login": "Log in",
+  "Logout": "Log out",
+  "Signup": "Sign up",
+  "Username": "Username",
+  "Password": "Password",
+  "Success": "Success",
+  "Failed": "Failed",
+  "Search": "Search",
+  "Items": "Items",
+  "Value": "Value",
+  "Save": "Save",
+  "Add": "Add",
+  "Refresh": "Refresh",
+  "Cancel": "Cancel",
+  "Confirm": "Confirm",
+  "Header": {
+    "OrderHistory": "Orders history",
+    "Cart": "Cart",
+    "ItemPanel": "Item Panel",
+    "OrderPanel": "Order Panel"
+  },
+  "LoginPage": {
+    "NoAccount": "Don't have an account?",
+    "HaveAccount": "Already have an account?"
+  },
+  "Item": {
+    "AddToCart": "Add to cart",
+    "Name": "Name",
+    "Price": "Price",
+    "AddItem": "Add item",
+    "EditItem": "Edit item: ",
+    "AddInfo": "Please input item information.",
+    "Delete": "Delete item",
+    "DeleteMsg": "Are you sure to delete "
+  },
+  "Cart": {
+    "ShoppingCart": "Shopping Cart",
+    "Summary": "Summary",
+    "Checkout": "Checkout",
+    "TotalPrice": "Total Price",
+    "StandardDelivery": "Standard-Delivery (Free)",
+    "BackToShop": "Back to shop",
+    "Confirm": "Confirm Order",
+    "ConfirmMsg": "Are you sure to confirm this order?",
+    "Cancel": "No, take me back"
+  },
+  "Order": {
+    "OrderDate": "Order Date",
+    "Status": "Status",
+    "Pending": "Pending",
+    "Completed": "Completed",
+    "Complete": "Complete Order",
+    "CompleteMsg": "Do you want to complete this order ?"
+  }
+}

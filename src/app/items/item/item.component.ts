@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { CartService } from 'src/app/services/cart.service';
 import { JwtService } from 'src/app/services/auth/jwt.service';
 import { UtilService } from 'src/app/services/util.service';
@@ -8,7 +8,7 @@ import { UtilService } from 'src/app/services/util.service';
   templateUrl: './item.component.html',
   styleUrls: ['./item.component.css'],
 })
-export class ItemComponent implements OnInit {
+export class ItemComponent {
   @Input() item;
   customerId = +this.jwtService.getId();
   constructor(
@@ -16,13 +16,11 @@ export class ItemComponent implements OnInit {
     private jwtService: JwtService
   ) {}
 
-  ngOnInit() {}
-
   addToCart() {
     let role = this.jwtService.getRole();
     if (!role || role === 'ROLE_OWNER') {
       UtilService.sendMessage(
-        'You have to login as Customer to do this',
+        UtilService.translation.instant('LoginRequired'),
         false
       );
       return;
@@ -34,6 +32,9 @@ export class ItemComponent implements OnInit {
     };
 
     this.cartService.addItem(itemReq);
-    UtilService.sendMessage('Added 1 ' + this.item.name + ' to cart!', true);
+    UtilService.sendMessage(
+      UtilService.translation.instant('CartAdded', { name: this.item.name }),
+      true
+    );
   }
 }

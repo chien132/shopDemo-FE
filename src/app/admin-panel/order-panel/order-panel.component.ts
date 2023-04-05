@@ -37,13 +37,16 @@ export class OrderPanelComponent implements OnInit {
     this.sub = this.modalService
       .openModal(
         this.entry,
-        'Complete Order',
-        `Do you want to complete this order ?`
+        UtilService.translation.instant('Order.Complete'),
+        UtilService.translation.instant('Order.CompleteMsg')
       )
       .subscribe((v) => {
         UtilService.hideModal('confirmModal');
         this.orderService.completeOrder(id).subscribe((res) => {
-          UtilService.sendMessage('Completed order !', true);
+          UtilService.sendMessage(
+            UtilService.translation.instant('OrderCompleted'),
+            true
+          );
           this.orders[index].order = res;
         });
       });

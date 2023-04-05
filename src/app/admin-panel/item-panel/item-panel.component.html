@@ -5,31 +5,31 @@
       <th class="text-center" scope="col-7">
         <!-- Name -->
         <div class="form-inline input-group-prepend">
-          <label for="itemSearch">Name </label>
+          <label for="itemSearch">{{ 'Item.Name' | translate }} </label>
           <input
             class="form-control mr-sm-2"
             type="text"
             id="itemSearch"
-            placeholder="Search"
+            placeholder="{{ 'Search' | translate }}"
             [(ngModel)]="searchValue"
           />
         </div>
       </th>
-      <th class="text-center" scope="col-2">Price</th>
+      <th class="text-center" scope="col-2">{{ 'Item.Price' | translate }}</th>
       <th class="text-center" scope="col-2">
         <button
           class="btn btn-success"
           style="right: 1vw; top: 10vh"
           (click)="onAdd()"
         >
-          Add
+          {{ 'Add' | translate }}
         </button>
         <button
           class="btn btn-primary"
           style="right: 1vw; top: 10vh"
           (click)="onRefresh()"
         >
-          Refresh
+          {{ 'Refresh' | translate }}
         </button>
       </th>
     </tr>
@@ -55,7 +55,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Add Item</h5>
+        <h5 class="modal-title">{{ 'Item.AddItem' | translate }}</h5>
         <button
           type="button"
           class="close"
@@ -67,10 +67,12 @@
         </button>
       </div>
       <div class="modal-body">
-        <p>Please input item information.</p>
+        <p>{{ 'Item.AddInfo' | translate }}</p>
         <form>
           <div class="input-group-prepend">
-            <label class="input-group-text" for="nameInput">Name</label>
+            <label class="input-group-text" for="nameInput">{{
+              'Item.Name' | translate
+            }}</label>
             <input
               tabindex="0"
               id="nameInput"
@@ -80,7 +82,9 @@
             />
           </div>
           <div class="input-group-prepend my-4">
-            <label class="input-group-text" for="priceInput">Price</label>
+            <label class="input-group-text" for="priceInput">{{
+              'Item.Price' | translate
+            }}</label>
             <input
               tabindex="0"
               id="priceInput"
@@ -108,7 +112,7 @@
           type="button"
           class="btn btn-primary"
         >
-          Save
+          {{ 'Save' | translate }}
         </button>
       </div>
     </div>

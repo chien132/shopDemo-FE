@@ -1,0 +1,19 @@
+{
+  "LoggedIn": "Đăng nhập thành công",
+  "Registered": "Đăng ký thành công",
+  "SessionExpired": "Phiên đăng nhập của bạn đã hết hạn, hãy đăng nhập lại!",
+  "AuthRequired": "Bạn không có quyền truy cập trang này!",
+  "OrderConfirmed": "Đã xác nhận đơn hàng!",
+  "CartAdded": "Đã thêm 1 \"{{name}}\" vào giỏ hàng!",
+  "LoginRequired": "Bạn cần đăng nhập để mua hàng",
+  "OrderCompleted": "Đã hoàn tất",
+  "ItemDeleted": " đã bị xóa!",
+  "ItemUpdated": "Đã cập nhật sản phẩm {{id}}: {{name}}",
+  "ItemCreated": "Sản phẩm {{name}} đã được tạo với id: {{id}}",
+  "PriceMinValid": "Giá phải cao hơn 0!",
+  "NameEmptyValid": "Tên sản phẩm không được trống!",
+  "CantConnect": "Không thể kết nối đến máy chủ!",
+  "Bad credentials": "Tài khoản hoặc mật khẩu không chính xác!",
+  "UnableDeleteItem": "Không thể xóa sản phẩm đã có trong đơn hàng hoặc giỏ hàng",
+  "CantCheckout": "Không thể đặt hàng khi không có sản phẩm trong giỏ."
+}

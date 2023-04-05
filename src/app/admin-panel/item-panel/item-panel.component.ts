@@ -52,14 +52,20 @@ export class ItemPanelComponent implements OnInit, OnDestroy {
 
   valid() {
     if (this.nameInputRef.nativeElement.value.length === 0) {
-      UtilService.sendMessage('Name must not empty!', false);
+      UtilService.sendMessage(
+        UtilService.translation.instant('NameEmptyValid'),
+        false
+      );
       this.nameInputRef.nativeElement.focus();
       return false;
     }
     this.priceInputRef.nativeElement.value =
       this.priceInputRef.nativeElement.value.replace(/[^0-9]/g, '');
     if (this.priceInputRef.nativeElement.value < 0) {
-      UtilService.sendMessage('Price must be greater than 0!', false);
+      UtilService.sendMessage(
+        UtilService.translation.instant('PriceMinValid'),
+        false
+      );
       this.priceInputRef.nativeElement.focus();
       return false;
     }
@@ -68,7 +74,9 @@ export class ItemPanelComponent implements OnInit, OnDestroy {
 
   onAdd() {
     const modal = $(`#addItemModal`).modal('show');
-    modal.find('.modal-title').html('Add item ');
+    modal
+      .find('.modal-title')
+      .html(UtilService.translation.instant('Item.AddItem'));
     this.nameInputRef.nativeElement.value = '';
     this.priceInputRef.nativeElement.value = '0';
     this.currentItem = null;
@@ -76,7 +84,9 @@ export class ItemPanelComponent implements OnInit, OnDestroy {
 
   onEdit(item: Item) {
     const modal = $(`#addItemModal`).modal('show');
-    modal.find('.modal-title').html('Edit ' + item.name);
+    modal
+      .find('.modal-title')
+      .html(UtilService.translation.instant('Item.EditItem') + item.name);
     this.nameInputRef.nativeElement.value = item.name;
     this.priceInputRef.nativeElement.value = item.price;
     this.currentItem = item;
@@ -94,7 +104,13 @@ export class ItemPanelComponent implements OnInit, OnDestroy {
       };
       this.itemService.create(newItem).subscribe(
         (res) => {
-          UtilService.sendMessage(`Created item ${res.id}: ${res.name}`, true);
+          UtilService.sendMessage(
+            UtilService.translation.instant('ItemCreated', {
+              id: res.id,
+              name: res.name,
+            }),
+            true
+          );
           this.items.push(res);
         },
         (err) => {
@@ -106,7 +122,13 @@ export class ItemPanelComponent implements OnInit, OnDestroy {
       this.currentItem.price = +this.priceInputRef.nativeElement.value;
       this.itemService.update(this.currentItem).subscribe(
         (res) => {
-          UtilService.sendMessage(`Updated item ${res.id}: ${res.name}`, true);
+          UtilService.sendMessage(
+            UtilService.translation.instant('ItemUpdated', {
+              id: res.id,
+              name: res.name,
+            }),
+            true
+          );
         },
         (err) => {
           UtilService.errorHandler(err);
@@ -121,17 +143,30 @@ export class ItemPanelComponent implements OnInit, OnDestroy {
     this.sub = this.modalService
       .openModal(
         this.entry,
-        'Warning !',
-        `Are you sure to delete "${item.name}" ?`
+        UtilService.translation.instant('Item.Delete'),
+        UtilService.translation.instant('Item.DeleteMsg') + item.name + ' ?'
       )
       .subscribe((v) => {
         UtilService.hideModal('confirmModal');
-        this.itemService.deleteItem(item.id).subscribe((res) => {
-          if (res.status == 200) {
-            UtilService.sendMessage(item.name + ' has been deleted!', true);
-            this.items.splice(this.items.indexOf(item), 1);
+        this.itemService.deleteItem(item.id).subscribe(
+          (res) => {
+            if (res.status == 200) {
+              UtilService.sendMessage(
+                item.name + UtilService.translation.instant('ItemDeleted'),
+                true
+              );
+              this.items.splice(this.items.indexOf(item), 1);
+            }
+          },
+          (err) => {
+            if (err.status === 500) {
+              UtilService.sendMessage(
+                UtilService.translation.instant('UnableDeleteItem'),
+                false
+              );
+            }
           }
-        });
+        );
       });
   }
 

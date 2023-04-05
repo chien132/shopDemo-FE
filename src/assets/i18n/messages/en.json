@@ -1,0 +1,19 @@
+{
+  "LoggedIn": "You are now logged in",
+  "Registered": "Your account has been created",
+  "SessionExpired": "Your session has expired, please login again!",
+  "AuthRequired": "You dont have permission to access this page!",
+  "OrderConfirmed": "Your order has been confirmed!",
+  "CartAdded": "Added 1 \"{{name}}\" to cart!",
+  "LoginRequired": "You have to login as Customer to do this",
+  "OrderCompleted": "Order Completed",
+  "ItemDeleted": " has been deleted!",
+  "ItemUpdated": "Updated item {{id}}: {{name}}",
+  "ItemCreated": "Item {{name}} has been created with id: {{id}}",
+  "PriceMinValid": "Price must be greater than 0!",
+  "NameEmptyValid": "Name must not empty!",
+  "CantConnect": "Cannot connect to the server!",
+  "Bad credentials": "Username or password is incorrect!",
+  "UnableDeleteItem": "Cannot delete an Item that is related to a Cart or an Order.",
+  "CantCheckout": "Cannot create an Order with no Items in Cart."
+}

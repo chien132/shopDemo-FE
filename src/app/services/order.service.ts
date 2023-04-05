@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, Subject, throwError } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { Order } from '../models/order.model';
 import { JwtService } from './auth/jwt.service';
 import { UtilService } from './util.service';
@@ -45,14 +45,23 @@ export class OrderService {
   }
 
   confirmOrder(customerId: number) {
+    UtilService.hideModal('confirmOrderModal');
     this.http.post<Order>(this.baseUrl, customerId).subscribe(
       (res) => {
-        UtilService.sendMessage('Your order has been confirmed!', true);
+        UtilService.sendMessage(
+          UtilService.translation.instant('OrderConfirmed'),
+          true
+        );
         this.router.navigate(['/orders']);
         UtilService.hideModal('confirmOrderModal');
       },
       (err) => {
-        UtilService.errorHandler(err);
+        if (err.status === 400) {
+          UtilService.sendMessage(
+            UtilService.translation.instant('CantCheckout'),
+            false
+          );
+        }
       }
     );
   }

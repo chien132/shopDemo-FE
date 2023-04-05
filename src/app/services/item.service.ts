@@ -48,12 +48,6 @@ export class ItemService {
   }
 
   deleteItem(id: number) {
-    return this.http
-      .delete(`${this.baseUrl}/${id}`, { observe: 'response' })
-      .pipe(
-        catchError((error) => {
-          return UtilService.errorHandler(error);
-        })
-      );
+    return this.http.delete(`${this.baseUrl}/${id}`, { observe: 'response' });
   }
 }

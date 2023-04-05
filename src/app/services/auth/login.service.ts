@@ -29,13 +29,15 @@ export class LoginService {
       )
       .subscribe((response) => {
         this.setToken(response.token);
-        UtilService.sendMessage('You are now logged in', true);
+        UtilService.sendMessage(
+          UtilService.translation.instant('LoggedIn'),
+          true
+        );
         if (this.jwtService.getRole() === 'ROLE_OWNER') {
           this.router.navigate(['/adminpanel/item']);
         } else {
           this.router.navigate(['/items']);
         }
-        console.log(this.jwtService.getDecodeToken());
       });
   }
 
@@ -48,7 +50,10 @@ export class LoginService {
         })
       )
       .subscribe((response) => {
-        UtilService.sendMessage(response.message, true);
+        UtilService.sendMessage(
+          UtilService.translation.instant('Registered'),
+          true
+        );
         this.router.navigate(['/login']);
       });
   }

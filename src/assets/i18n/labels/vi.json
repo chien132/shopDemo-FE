@@ -1,0 +1,56 @@
+{
+  "Login": "Đăng nhập",
+  "Logout": "Đăng xuất",
+  "Signup": "Đăng ký",
+  "Username": "Tài khoản",
+  "Password": "Mật khẩu",
+  "Success": "Thành công",
+  "Failed": "Thất bại",
+  "Search": "Tìm kiếm",
+  "Items": "Sản phẩm",
+  "Value": "Giá trị",
+  "Save": "Lưu",
+  "Add": "Thêm mới",
+  "Refresh": "Tải lại",
+  "Cancel": "Hủy bỏ",
+  "Confirm": "Xác nhận",
+  "Header": {
+    "OrderHistory": "Đơn hàng",
+    "Cart": "Giỏ hàng",
+    "ItemPanel": "Sản phẩm",
+    "OrderPanel": "Đơn hàng"
+  },
+  "LoginPage": {
+    "NoAccount": "Bạn chưa có tài khoản?",
+    "HaveAccount": "Bạn đã có tài khoản?"
+  },
+  "Item": {
+    "AddToCart": "Thêm vào giỏ",
+    "Name": "Tên",
+    "Price": "Giá",
+    "AddItem": "Thêm sản phẩm",
+    "EditItem": "Đang chỉnh sửa: ",
+    "AddInfo": "Hãy nhập thông tin sản phẩm.",
+    "Delete": "Xóa sản phẩm",
+    "DeleteMsg": "Bạn chắc chắn muốn xóa "
+  },
+  "Cart": {
+    "ShoppingCart": "Giỏ hàng",
+    "Summary": "Tổng kết",
+    "Checkout": "Đặt hàng",
+    "TotalPrice": "Tổng giá trị",
+    "StandardDelivery": "Giao hàng tiêu chuẩn (Miễn phí)",
+    "BackToShop": "Tiếp tục mua hàng",
+    "Confirm": "Xác nhận",
+    "ConfirmMsg": "Bạn có muốn hoàn thành đơn hàng?",
+    "Cancel": "Không, quay lại giỏ hàng"
+  },
+  "Order": {
+    "OrderDate": "Ngày đặt hàng",
+    "Status": "Trạng thái",
+    "Pending": "Đang chờ",
+    "Completed": "Đã hoàn tất",
+    "Complete": "Hoàn thành đơn hàng",
+    "CompleteMsg": "Bạn chắc chắn muốn hoàn thành đơn hàng này ?"
+  }
+}

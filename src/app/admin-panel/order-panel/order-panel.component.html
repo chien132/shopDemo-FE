@@ -2,17 +2,19 @@
   <thead>
     <tr>
       <th class="text-center" scope="col">#</th>
-      <th class="text-center" scope="col">Order Date</th>
-      <th class="text-center" scope="col">Items</th>
-      <th class="text-center" scope="col">Value</th>
-      <th class="text-center" scope="col">Status</th>
+      <th class="text-center" scope="col">
+        {{ 'Order.OrderDate' | translate }}
+      </th>
+      <th class="text-center" scope="col">{{ 'Items' | translate }}</th>
+      <th class="text-center" scope="col">{{ 'Value' | translate }}</th>
+      <th class="text-center" scope="col">{{ 'Order.Status' | translate }}</th>
       <th class="text-center" scope="col">
         <button
           class="btn btn-primary"
           style="right: 1vw; top: 10vh"
           (click)="onRefresh()"
         >
-          Refresh
+          {{ 'Refresh' | translate }}
         </button>
       </th>
     </tr>
@@ -39,7 +41,10 @@
           'text-warning': !orderRow.order.completed
         }"
       >
-        {{ orderRow.order.completed ? 'Completed' : 'Pending' }}
+        {{
+          (orderRow.order.completed ? 'Order.Completed' : 'Order.Pending')
+            | translate
+        }}
       </td>
       <td class="text-center">
         <i
@@ -52,7 +57,7 @@
           [ngClass]="{ 'btn-secondary': orderRow.order.completed }"
           class="btn btn-success px-2"
         >
-          Complete Order
+          {{ 'Order.Complete' | translate }}
         </button>
       </td>
     </tr>

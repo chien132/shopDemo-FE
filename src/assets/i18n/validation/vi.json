@@ -1,0 +1,10 @@
+{
+  "UsernameRequired": "Tên tài khoản không được trống",
+  "UsernameMinValid": "Tên tài khoản phải có ít nhất 3 ký tự",
+  "UsernameMaxValid": "Tên tài khoản không được hơn 20 ký tự",
+  "PasswordRequired": "Mật khẩu không được trống",
+  "PasswordMinValid": "Mật khẩu phải có ít nhất 3 ký tự",
+  "PasswordMaxValid": "Mật khẩu không được hơn 40 ký tự",
+  "ConfirmPassRequired": "Hãy xác nhận lại mật khẩu",
+  "ConfirmPassNotMatch": "Mật khẩu không khớp"
+}

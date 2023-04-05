@@ -1,7 +1,7 @@
 <div class="justify-content-center">
   <div class="card">
     <div class="card-header text-left">
-      <h3>{{ currentRoute | titlecase }}</h3>
+      <h3>{{ currentRoute | titlecase | translate }}</h3>
     </div>
     <div class="card-body">
       <form [formGroup]="form" (ngSubmit)="onSubmit()">
@@ -17,20 +17,20 @@
             type="text"
             class="form-control"
             [ngClass]="{ 'is-invalid': submitted && f['username'].errors }"
-            placeholder="Username"
+            placeholder="{{ 'Username' | translate }}"
           />
           <div
             *ngIf="submitted && f['username'].errors"
             class="invalid-feedback"
           >
             <div *ngIf="f['username'].errors['required']">
-              Username is required
+              {{ 'UsernameRequired' | translate }}
             </div>
             <div *ngIf="f['username'].errors['minlength']">
-              Username must be at least 3 characters
+              {{ 'UsernameMinValid' | translate }}
             </div>
             <div *ngIf="f['username'].errors['maxlength']">
-              Username must not exceed 20 characters
+              {{ 'UsernameMaxValid' | translate }}
             </div>
           </div>
         </div>
@@ -46,20 +46,20 @@
             formControlName="password"
             class="form-control"
             [ngClass]="{ 'is-invalid': submitted && f['password'].errors }"
-            placeholder="Password"
+            placeholder="{{ 'Password' | translate }}"
           />
           <div
             *ngIf="submitted && f['password'].errors"
             class="invalid-feedback"
           >
             <div *ngIf="f['password'].errors['required']">
-              Password is required
+              {{ 'PasswordRequired' | translate }}
             </div>
             <div *ngIf="f['password'].errors['minlength']">
-              Password must be at least 3 characters
+              {{ 'PasswordMinValid' | translate }}
             </div>
             <div *ngIf="f['password'].errors['maxlength']">
-              Username must not exceed 40 characters
+              {{ 'PasswordMaxValid' | translate }}
             </div>
           </div>
         </div>
@@ -86,10 +86,10 @@
             class="invalid-feedback"
           >
             <div *ngIf="f['confirmPassword'].errors['required']">
-              Confirm Password is required
+              {{ 'ConfirmPassRequired' | translate }}
             </div>
             <div *ngIf="f['confirmPassword'].errors['!isMatching']">
-              Confirm Password does not match
+              {{ 'ConfirmPassMotMatch' | translate }}
             </div>
           </div>
         </div>
@@ -99,15 +99,8 @@
             id="loginbtn"
             class="btn btn-primary float-right btn-block p-2 mt-4"
           >
-            {{ currentRoute | titlecase }}
+            {{ currentRoute | titlecase | translate }}
           </button>
-          <!-- <button
-            type="button"
-            (click)="onReset()"
-            class="btn btn-warning float-right"
-          >
-            Reset
-          </button> -->
         </div>
       </form>
     </div>
@@ -116,11 +109,13 @@
         *ngIf="currentRoute == 'login'; else signup"
         class="d-flex justify-content-center links"
       >
-        Don't have an account?<a routerLink="/signup">Sign Up</a>
+        {{ 'LoginPage.NoAccount' | translate
+        }}<a routerLink="/signup">{{ 'Signup' | translate }}</a>
       </div>
       <ng-template #signup>
         <div class="d-flex justify-content-center links">
-          Already have an account?<a routerLink="/login">Log in</a>
+          {{ 'LoginPage.HaveAccount' | translate
+          }}<a routerLink="/login">{{ 'Login' | translate }}</a>
         </div>
       </ng-template>
     </div>
