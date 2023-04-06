@@ -6,5 +6,7 @@
   "PasswordMinValid": "Mật khẩu phải có ít nhất 3 ký tự",
   "PasswordMaxValid": "Mật khẩu không được hơn 40 ký tự",
   "ConfirmPassRequired": "Hãy xác nhận lại mật khẩu",
-  "ConfirmPassNotMatch": "Mật khẩu không khớp"
+  "ConfirmPassNotMatch": "Mật khẩu không khớp",
+  "ForbiddenChar": "Trường này không được chứa kí tự ' hoặc \"",
+  "UsernameNotAvailable": "Tài khoản này đã tồn tại!"
 }

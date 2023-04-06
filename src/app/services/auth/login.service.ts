@@ -5,6 +5,7 @@ import { catchError } from 'rxjs/operators';
 import { UtilService } from '../util.service';
 import { Router } from '@angular/router';
 import { JwtService } from './jwt.service';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -18,6 +19,14 @@ export class LoginService {
     private jwtService: JwtService,
     private router: Router
   ) {}
+
+  checkUsername(username: string): Observable<boolean> {
+    return this.http.get<boolean>(this.baseUrl + 'check/' + username).pipe(
+      catchError((error) => {
+        return UtilService.errorHandler(error);
+      })
+    );
+  }
 
   logIn(customer) {
     this.http

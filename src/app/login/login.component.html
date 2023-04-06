@@ -12,7 +12,6 @@
             </span>
           </div>
           <input
-            #usernameInput
             formControlName="username"
             type="text"
             class="form-control"
@@ -32,6 +31,12 @@
             <div *ngIf="f['username'].errors['maxlength']">
               {{ 'UsernameMaxValid' | translate }}
             </div>
+            <div *ngIf="f['username'].errors['isForbidden']">
+              {{ 'ForbiddenChar' | translate }}
+            </div>
+            <div *ngIf="f['username'].errors['usernameNotAvailable']">
+              {{ 'UsernameNotAvailable' | translate }}
+            </div>
           </div>
         </div>
         <div class="input-group form-group">
@@ -41,7 +46,6 @@
             ></span>
           </div>
           <input
-            #passwordInput
             type="Password"
             formControlName="password"
             class="form-control"
@@ -60,6 +64,9 @@
             </div>
             <div *ngIf="f['password'].errors['maxlength']">
               {{ 'PasswordMaxValid' | translate }}
+            </div>
+            <div *ngIf="f['password'].errors['isForbidden']">
+              {{ 'ForbiddenChar' | translate }}
             </div>
           </div>
         </div>
@@ -88,8 +95,13 @@
             <div *ngIf="f['confirmPassword'].errors['required']">
               {{ 'ConfirmPassRequired' | translate }}
             </div>
-            <div *ngIf="f['confirmPassword'].errors['!isMatching']">
-              {{ 'ConfirmPassMotMatch' | translate }}
+            <div
+              *ngIf="
+                !f['confirmPassword'].errors['required'] &&
+                f['confirmPassword'].errors['unMatching']
+              "
+            >
+              {{ 'ConfirmPassNotMatch' | translate }}
             </div>
           </div>
         </div>
@@ -98,6 +110,7 @@
             type="submit"
             id="loginbtn"
             class="btn btn-primary float-right btn-block p-2 mt-4"
+            [ngClass]="{ 'btn-secondary': !form.valid }"
           >
             {{ currentRoute | titlecase | translate }}
           </button>

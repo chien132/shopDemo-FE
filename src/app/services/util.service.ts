@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { AbstractControl, ValidationErrors } from '@angular/forms';
+import { AbstractControl, FormControl, ValidationErrors } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { EMPTY } from 'rxjs';
 declare const $: any;
@@ -56,7 +56,13 @@ export class UtilService {
         !!control.parent.value &&
         control.value === control.parent.controls[matchTo].value
         ? null
-        : { isMatching: false };
+        : { unMatching: true };
     };
+  }
+
+  static checkSpecialChar(control: FormControl): { [s: string]: boolean } {
+    return control.value.includes("'") || control.value.includes('"')
+      ? { isForbidden: true }
+      : null;
   }
 }

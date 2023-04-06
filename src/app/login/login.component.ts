@@ -1,10 +1,4 @@
-import {
-  Component,
-  ElementRef,
-  OnDestroy,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { LoginService } from '../services/auth/login.service';
 import { UtilService } from '../services/util.service';
@@ -23,9 +17,6 @@ import {
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit, OnDestroy {
-  @ViewChild('usernameInput', { static: true }) usernameRef: ElementRef;
-  @ViewChild('passwordInput', { static: true }) passwordRef: ElementRef;
-
   subRouterEvent: Subscription;
   currentRoute: string;
 
@@ -55,7 +46,9 @@ export class LoginComponent implements OnInit, OnDestroy {
           Validators.required,
           Validators.minLength(3),
           Validators.maxLength(20),
+          UtilService.checkSpecialChar,
         ],
+        this.checkUsernameAvail.bind(this),
       ],
       password: [
         '',
@@ -63,6 +56,7 @@ export class LoginComponent implements OnInit, OnDestroy {
           Validators.required,
           Validators.minLength(3),
           Validators.maxLength(40),
+          UtilService.checkSpecialChar,
         ],
       ],
       confirmPassword: [
@@ -80,9 +74,13 @@ export class LoginComponent implements OnInit, OnDestroy {
         Validators.required,
         UtilService.matchValues('password'),
       ]);
+      this.form.controls.username.setAsyncValidators(
+        this.checkUsernameAvail.bind(this)
+      );
     } else {
       this.form.controls.confirmPassword.clearValidators();
       this.form.controls.confirmPassword.updateValueAndValidity();
+      this.form.controls.username.clearAsyncValidators();
     }
   }
 
@@ -94,12 +92,20 @@ export class LoginComponent implements OnInit, OnDestroy {
     return this.form.controls;
   }
 
+  checkUsernameAvail(control: FormControl): Promise<any> {
+    const promise = new Promise<any>((resolve, reject) => {
+      this.loginService.checkUsername(control.value).subscribe((res) => {
+        if (res === true) {
+          resolve({ usernameNotAvailable: true });
+        } else resolve(null);
+      });
+    });
+    return promise;
+  }
+
   onSubmit(): void {
     this.submitted = true;
     if (this.form.invalid) {
-      return;
-    }
-    if (!this.valid()) {
       return;
     }
     this.currentRoute === 'login' ? this.onLogin() : this.onSignup();
@@ -110,32 +116,17 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.form.reset();
   }
 
-  valid() {
-    let username = this.usernameRef.nativeElement.value;
-    let password = this.passwordRef.nativeElement.value;
-    if (username.includes('"') || username.includes("'")) {
-      this.usernameRef.nativeElement.focus();
-      UtilService.sendMessage(`"  and  '  are not allow here!!!`, false);
-      return false;
-    } else if (password.includes('"') || password.includes("'")) {
-      this.passwordRef.nativeElement.focus();
-      UtilService.sendMessage(`"  and  '  are not allow here!!!`, false);
-      return false;
-    }
-    return true;
-  }
-
   onLogin() {
     let customer = {
-      username: this.usernameRef.nativeElement.value,
-      password: this.passwordRef.nativeElement.value,
+      username: this.form.value['username'],
+      password: this.form.value['password'],
     };
     this.loginService.logIn(customer);
   }
   onSignup() {
     let customer = {
-      username: this.usernameRef.nativeElement.value,
-      password: this.passwordRef.nativeElement.value,
+      username: this.form.value['username'],
+      password: this.form.value['password'],
       role: true,
     };
     this.loginService.signUp(customer);
