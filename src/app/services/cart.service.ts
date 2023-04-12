@@ -4,12 +4,13 @@ import { Observable, Subject } from 'rxjs';
 import { Cart } from '../models/cart.model';
 import { JwtService } from './auth/jwt.service';
 import { UtilService } from './util.service';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CartService {
-  baseUrl = 'http://localhost:8080/api/carts';
+  baseUrl = environment.backendURL + 'carts';
   cartWatcher = new Subject<Cart>();
 
   constructor(private http: HttpClient, private jwtService: JwtService) {}

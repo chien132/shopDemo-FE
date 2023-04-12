@@ -6,12 +6,13 @@ import { UtilService } from '../util.service';
 import { Router } from '@angular/router';
 import { JwtService } from './jwt.service';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class LoginService {
-  baseUrl = 'http://localhost:8080/api/';
+  baseUrl = environment.backendURL;
 
   constructor(
     private http: HttpClient,

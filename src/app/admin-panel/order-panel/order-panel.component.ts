@@ -20,6 +20,7 @@ export class OrderPanelComponent implements OnInit {
   @ViewChild('modal', { read: ViewContainerRef, static: true })
   entry!: ViewContainerRef;
   sub!: Subscription;
+  searchValue: string;
 
   ngOnInit() {
     this.onRefresh();

@@ -24,6 +24,7 @@ export class ItemPanelComponent implements OnInit, OnDestroy {
   @ViewChild('nameInput', { static: true }) nameInputRef: ElementRef;
   @ViewChild('priceInput', { static: true }) priceInputRef: ElementRef;
   currentItem: Item = null;
+  searchValue: string;
 
   constructor(
     private itemService: ItemService,

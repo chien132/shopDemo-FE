@@ -16,7 +16,9 @@ export class HeaderComponent implements OnInit {
   username = this.jwtService.getUsername();
   role = this.jwtService.getRole();
   currentRoute: string;
+  search: string;
   searchTimer;
+  currentLang = this.translate.currentLang;
 
   constructor(
     private translate: TranslateService,
@@ -35,6 +37,10 @@ export class HeaderComponent implements OnInit {
   changeLang(language: string) {
     localStorage.setItem('locale', language);
     this.translate.use(language);
+  }
+
+  getLangs() {
+    return this.translate.getLangs();
   }
 
   onInput(event) {

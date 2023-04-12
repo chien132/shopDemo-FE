@@ -6,12 +6,13 @@ import { JwtService } from './auth/jwt.service';
 import { UtilService } from './util.service';
 import { Router } from '@angular/router';
 import { catchError } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class OrderService {
-  baseUrl = 'http://localhost:8080/api/orders';
+  baseUrl = environment.backendURL + 'orders';
   selectOrder = new Subject<Order>();
 
   getTotal(order: Order): { number: number; value: number } {

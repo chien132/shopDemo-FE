@@ -1,0 +1,7 @@
+services:
+  shopdemo-ui:
+    container_name: shopdemo-ui
+    ports:
+      - '80:80/tcp'
+    image: shopdemo-ui
+    network_mode: bridge

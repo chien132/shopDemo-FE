@@ -18,7 +18,6 @@ export class OrderListComponent implements OnInit {
     this.orderService.getOrdersByCustomer().subscribe(
       (res) => {
         this.orders = res;
-        this.orders.reverse();
         this.selectedOrder = this.orders[0];
         this.total = this.orderService.getTotal(this.selectedOrder);
       },

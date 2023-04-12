@@ -112,9 +112,9 @@
             (change)="changeLang(langSelect.value)"
           >
             <option
-              *ngFor="let lang of translate.getLangs()"
+              *ngFor="let lang of getLangs()"
               [value]="lang"
-              [selected]="lang === translate.currentLang"
+              [selected]="lang === currentLang"
             >
               {{ lang }}
             </option>

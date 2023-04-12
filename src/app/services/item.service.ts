@@ -4,12 +4,13 @@ import { Observable, Subject } from 'rxjs';
 import { Item } from '../models/item.model';
 import { catchError } from 'rxjs/operators';
 import { UtilService } from './util.service';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ItemService {
-  baseUrl = 'http://localhost:8080/api/items';
+  baseUrl = environment.backendURL + 'items';
 
   itemFilter = new Subject<string>();
   currentSearch: string = '%';
