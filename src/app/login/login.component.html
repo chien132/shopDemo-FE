@@ -1,7 +1,24 @@
 <div class="justify-content-center">
   <div class="card">
     <div class="card-header text-left">
-      <h3>{{ currentRoute | titlecase | translate }}</h3>
+      <div class="row">
+        <ul class="nav nav-pills nav-fill col-12">
+          <li class="nav-item">
+            <a routerLink="/login" routerLinkActive="active" class="nav-link">{{
+              'Login' | translate
+            }}</a>
+          </li>
+          <li class="nav-item">
+            <a
+              routerLink="/signup"
+              routerLinkActive="active"
+              class="nav-link"
+              >{{ 'Signup' | translate }}</a
+            >
+          </li>
+        </ul>
+      </div>
+      <!-- <h3>{{ currentRoute | titlecase | translate }}</h3> -->
     </div>
     <div class="card-body">
       <form [formGroup]="form" (ngSubmit)="onSubmit()">

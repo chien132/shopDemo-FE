@@ -1,3 +1,53 @@
-<div class="row">
-  <app-item *ngFor="let item of items" [item]="item"></app-item>
+<div class="row d-flex justify-content-center">
+  <div class="col-12">
+    <div class="col-12 d-flex justify-content-end mt-3">
+      <pagination-controls
+        previousLabel="{{ 'Prev' | translate }}"
+        nextLabel="{{ 'Next' | translate }}"
+        responsive="true"
+        (pageChange)="handlePageChange($event)"
+      ></pagination-controls>
+    </div>
+    <div class="col-md-12 d-flex justify-content-end">
+      <div class="col-3">
+        <div class="input-group input-group-sm">
+          <div class="input-group-prepend">
+            <label class="input-group-text">{{
+              'Itemperpage' | translate
+            }}</label>
+          </div>
+          <select class="custom-select" (change)="handlePageSizeChange($event)">
+            <option *ngFor="let size of pageSizes" [ngValue]="size">
+              {{ size }}
+            </option>
+          </select>
+        </div>
+      </div>
+      <div class="col-3">
+        <div class="input-group input-group-sm">
+          <div class="input-group-prepend">
+            <label class="input-group-text">{{ 'Sort' | translate }}</label>
+          </div>
+          <select class="custom-select" (change)="handleSortChange($event)">
+            <option *ngFor="let sort of sorts" value="{{ sort }}">
+              {{ sort | translate }}
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <app-item
+    *ngFor="
+      let item of items
+        | paginate
+          : {
+              itemsPerPage: pageSize,
+              currentPage: page,
+              totalItems: count
+            }
+    "
+    [item]="item"
+  ></app-item>
 </div>

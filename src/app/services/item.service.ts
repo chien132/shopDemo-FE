@@ -29,6 +29,13 @@ export class ItemService {
     );
   }
 
+  getAllPaginated(params): Observable<{ items: Item[]; totalItems: number }> {
+    return this.http.get<{ items: Item[]; totalItems: number }>(
+      `${this.baseUrl}/searchPaginated`,
+      { params }
+    );
+  }
+
   getListItemsByNameLike(search: string): Observable<Item[]> {
     return this.http
       .get<Item[]>(`${this.baseUrl}/search`, {

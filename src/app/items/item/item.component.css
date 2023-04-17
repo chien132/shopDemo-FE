@@ -2,6 +2,10 @@
   width: 222px;
 }
 
+.image {
+  transition: all 0.3s ease-in-out;
+}
+
 .product-grid {
   font-family: 'Poppins', sans-serif;
   text-align: center;
@@ -76,6 +80,9 @@
 .product-grid:hover .add-to-cart {
   bottom: 0;
 }
+.product-grid:hover .image {
+  transform: translateY(-4vh);
+}
 .product-grid .add-to-cart:hover {
   text-shadow: 4px 4px rgba(0, 0, 0, 0.2);
 }
@@ -91,11 +98,11 @@
   margin: 0 0 7px;
 }
 .product-grid .title a {
-  color: #777;
+  color: #424242;
   transition: all 0.3s ease 0s;
 }
 .product-grid .title a:hover {
-  color: #a5ba8d;
+  color: #47c23b;
 }
 .product-grid .price {
   color: #0d0d0d;

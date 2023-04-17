@@ -1,7 +1,7 @@
-table.table.table-bordered {
+/* table.table.table-bordered {
   height: 90vh;
   overflow-y: scroll;
-}
+} */
 
 .table thead th {
   background: lightblue;
