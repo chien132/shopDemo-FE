@@ -17,7 +17,11 @@
             }}</label>
           </div>
           <select class="custom-select" (change)="handlePageSizeChange($event)">
-            <option *ngFor="let size of pageSizes" [ngValue]="size">
+            <option
+              *ngFor="let size of pageSizes"
+              [ngValue]="size"
+              [selected]="size == pageSize"
+            >
               {{ size }}
             </option>
           </select>
